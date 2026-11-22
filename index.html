@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bộ Học Liệu Bài 12: Tạo Biểu Mẫu — Tin học 12 KNTT</title>
+  <meta name="description" content="Trọn bộ 9 học liệu chuẩn hóa và Kế hoạch bài dạy Bài 12: Tạo biểu mẫu - Tin học 12 Kết nối tri thức.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-dark: #1e3a8a;
+      --primary-light: #3b82f6;
+      --accent: #059669;
+      --accent-hover: #047857;
+      --purple: #7c3aed;
+      --amber: #d97706;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --border: #e2e8f0;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8fafc;
+      color: var(--slate-900);
+      line-height: 1.5;
+      padding-bottom: 60px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    /* Header / Hero */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+      color: white;
+      padding: 44px 0 38px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
+    }
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .subtitle {
+      font-size: 16px;
+      color: #bfdbfe;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .btn-header {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #ffffff;
+      color: #1e3a8a;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 10px;
+      transition: all 0.15s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .btn-header:hover {
+      background: #eff6ff;
+      transform: translateY(-1px);
+    }
+    .btn-header.outline {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: none;
+    }
+    .btn-header.outline:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* Section styling */
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin: 32px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title .pill {
+      font-size: 12.5px;
+      font-weight: 700;
+      background: #dbeafe;
+      color: #1d4ed8;
+      padding: 3px 12px;
+      border-radius: 999px;
+    }
+
+    /* Cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08);
+      border-color: #cbd5e1;
+    }
+    .card.highlight {
+      border-color: #93c5fd;
+      background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 28%);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .item-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: white;
+      background: var(--primary);
+      padding: 3px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card.highlight .item-tag {
+      background: var(--primary-light);
+    }
+    .card.accent .item-tag {
+      background: var(--accent);
+    }
+    .activity-tag {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--slate-600);
+      background: #f1f5f9;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--slate-600);
+      line-height: 1.55;
+      flex-grow: 1;
+      margin-bottom: 18px;
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.12s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+    .btn-success {
+      background: #059669;
+      color: white;
+    }
+    .btn-success:hover {
+      background: #047857;
+    }
+    .btn-subtle {
+      background: #f1f5f9;
+      color: var(--slate-700);
+      border-color: #e2e8f0;
+    }
+    .btn-subtle:hover {
+      background: #e2e8f0;
+      color: var(--slate-900);
+    }
+    .btn-purple {
+      background: #7c3aed;
+      color: white;
+    }
+    .btn-purple:hover {
+      background: #6d28d9;
+    }
+
+    /* Modal Viewer */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 1100px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      background: #f8fafc;
+    }
+    .modal-header h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--slate-800);
+    }
+    .modal-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-close {
+      background: #e2e8f0;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-close:hover { background: #cbd5e1; }
+    .modal-body {
+      flex: 1;
+      background: #e2e8f0;
+    }
+    .modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+    }
+
+    footer {
+      margin-top: 50px;
+      text-align: center;
+      color: var(--slate-600);
+      font-size: 13.5px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 26px; }
+      .header-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <div class="badge-bar">
+        <span class="badge">🏫 Trường THPT Nguyễn Chí Thanh</span>
+        <span class="badge">💻 Tổ Tin học</span>
+        <span class="badge">📚 Tin học 12 (KNTT) - Ứng dụng</span>
+        <span class="badge">⏱️ 02 Tiết (Phòng máy tính)</span>
+      </div>
+      <h1>Bài 12: Tạo Biểu Mẫu (Form) — Bộ 9 Học Liệu Dạy Học</h1>
+      <p class="subtitle">
+        Cổng học liệu số trực tuyến được đồng bộ 100% theo Kế hoạch bài dạy (Giáo án) Bài 12. Thầy cô giáo và học sinh có thể <strong>xem trực tiếp trên web</strong>, chạy trò chơi tương tác, kiểm thử mã nguồn HTML, xem slide trình chiếu và tải về các file Word/PDF in ấn chuẩn.
+      </p>
+      <div class="header-actions">
+        <a href="KHBD%20Bài%2012.pdf" class="btn-header" target="_blank">📖 Mở Kế Hoạch Bài Dạy (PDF)</a>
+        <a href="Hoc_lieu_Bai_12/02_Tro_choi_Dau_truong_Bieu_mau/Dau_truong_Bieu_mau.html" class="btn-header" target="_blank">🎮 Chạy Trò Chơi Đấu Trường</a>
+        <a href="Hoc_lieu_Bai_12/07_Bai_trinh_chieu/Bai_12_Tao_bieu_mau.pdf" class="btn-header outline" target="_blank">🖥️ Trình Chiếu Slide (PDF)</a>
+        <a href="https://github.com/toiyeutinhoc238-sudo/khbd_bai_12" class="btn-header outline" target="_blank">📂 Xem Mã Nguồn GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Nhóm 1: 6 Học liệu trong Hồ sơ bài dạy -->
+    <div class="section-title">
+      <span>Nhóm I: 6 Học liệu trong Hồ sơ bài dạy</span>
+      <span class="pill">Học liệu 01 – 06</span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- HL 01 -->
+      <div class="card highlight">
+        <div class="card-top">
+          <span class="item-tag">Học liệu 01</span>
+          <span class="activity-tag">HĐ 2.1 &amp; 2.2</span>
+        </div>
+        <h3 class="card-title">Phiếu học tập số 1</h3>
+        <p class="card-desc">
+          Gồm 2 câu hỏi cốt lõi: Câu 1 (Cấu trúc &amp; thuộc tính thẻ <code>&lt;form&gt;</code>, phân biệt GET/POST) và Câu 2 (Lựa chọn điều khiển nhập liệu cho đơn đặt hàng). Thiết kế vừa khít 1 trang A4.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/01_Phieu_hoc_tap_so_1/Phieu_hoc_tap_so_1.pdf" class="btn btn-primary" target="_blank">📄 Xem Phiếu (PDF)</a>
+          <a href="Hoc_lieu_Bai_12/01_Phieu_hoc_tap_so_1/Phieu_hoc_tap_so_1_Dap_an_GV.pdf" class="btn btn-subtle" target="_blank">✅ Đáp án GV</a>
+          <a href="Hoc_lieu_Bai_12/01_Phieu_hoc_tap_so_1/Phieu_hoc_tap_so_1.docx" class="btn btn-subtle" download>📥 Word (.docx)</a>
+        </div>
+      </div>
+
+      <!-- HL 02 -->
+      <div class="card accent highlight">
+        <div class="card-top">
+          <span class="item-tag">Học liệu 02</span>
+          <span class="activity-tag">HĐ 3.1 (12 phút)</span>
+        </div>
+        <h3 class="card-title">Trò chơi “Đấu trường Biểu mẫu”</h3>
+        <p class="card-desc">
+          Ứng dụng web tương tác thi đấu giữa 4 đội học sinh: 12 câu hỏi trắc nghiệm chuẩn giáo án, đồng hồ đếm ngược 20 giây, điểm thưởng tốc độ, Ngôi sao hi vọng nhân đôi điểm ở câu 12, bảng xếp hạng tổng kết.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/02_Tro_choi_Dau_truong_Bieu_mau/Dau_truong_Bieu_mau.html" class="btn btn-success" target="_blank">🎮 Chơi Trực Tiếp</a>
+          <a href="Hoc_lieu_Bai_12/02_Tro_choi_Dau_truong_Bieu_mau/The_le_va_Bo_cau_hoi_Dau_truong_Bieu_mau.pdf" class="btn btn-subtle" target="_blank">📄 Thể lệ 12 câu (PDF)</a>
+          <a href="Hoc_lieu_Bai_12/02_Tro_choi_Dau_truong_Bieu_mau/The_le_va_Bo_cau_hoi_Dau_truong_Bieu_mau.docx" class="btn btn-subtle" download>📥 Word</a>
+        </div>
+      </div>
+
+      <!-- HL 03 -->
+      <div class="card">
+        <div class="card-top">
+          <span class="item-tag">Học liệu 03</span>
+          <span class="activity-tag">HĐ 3.2 (Thực hành)</span>
+        </div>
+        <h3 class="card-title">Bảng kiểm mã do AI gợi ý</h3>
+        <p class="card-desc">
+          Bảng 5 tiêu chí kỹ thuật kiểm tra mã nguồn HTML do AI sinh ra (cấu trúc form, phương thức bảo mật, label liên kết, radio/checkbox và nút bấm), kèm cam kết tự chịu trách nhiệm của học sinh.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/03_Bang_kiem_ma_AI_goi_y/Bang_kiem_ma_AI_goi_y.pdf" class="btn btn-primary" target="_blank">📄 Xem Bảng kiểm (PDF)</a>
+          <a href="Hoc_lieu_Bai_12/03_Bang_kiem_ma_AI_goi_y/Bang_kiem_ma_AI_goi_y.docx" class="btn btn-subtle" download>📥 Word (.docx)</a>
+        </div>
+      </div>
+
+      <!-- HL 04 -->
+      <div class="card">
+        <div class="card-top">
+          <span class="item-tag">Học liệu 04</span>
+          <span class="activity-tag">HĐ 3.2 (Dự phòng)</span>
+        </div>
+        <h3 class="card-title">Đoạn mã mẫu có lỗi cài sẵn</h3>
+        <p class="card-desc">
+          Phương án dự phòng khi mất mạng hoặc AI không hoạt động: file HTML cài sẵn đúng 5 lỗi phổ biến của học sinh, kèm bản sửa mẫu và phiếu phát tay đánh số dòng 1–29.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/04_Doan_ma_mau_co_loi/doan_ma_mau_co_loi.html" class="btn btn-purple" target="_blank">🐞 Mở HTML Có Lỗi</a>
+          <a href="Hoc_lieu_Bai_12/04_Doan_ma_mau_co_loi/doan_ma_mau_da_sua_GV.html" class="btn btn-subtle" target="_blank">✅ Bản Đã Sửa</a>
+          <a href="Hoc_lieu_Bai_12/04_Doan_ma_mau_co_loi/Phieu_Doan_ma_mau_co_loi.pdf" class="btn btn-subtle" target="_blank">📄 Phiếu bài tập</a>
+          <a href="Hoc_lieu_Bai_12/04_Doan_ma_mau_co_loi/Dap_an_5_loi_GV.pdf" class="btn btn-subtle" target="_blank">🔑 Đáp án 5 lỗi</a>
+        </div>
+      </div>
+
+      <!-- HL 05 -->
+      <div class="card">
+        <div class="card-top">
+          <span class="item-tag">Học liệu 05</span>
+          <span class="activity-tag">HĐ 3.2 &amp; HĐ 4</span>
+        </div>
+        <h3 class="card-title">Bảng tiêu chí đánh giá sản phẩm</h3>
+        <p class="card-desc">
+          Rubric đánh giá thang 10 điểm (2 - 3 - 2 - 2 - 1) với 3 mức độ (Tốt, Đạt, Chưa đạt) dùng cho học sinh tự đánh giá, đánh giá đồng đẳng giữa các nhóm và giáo viên chấm điểm.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/05_Bang_tieu_chi_danh_gia/Bang_tieu_chi_danh_gia_san_pham.pdf" class="btn btn-primary" target="_blank">📄 Xem Rubric (PDF)</a>
+          <a href="Hoc_lieu_Bai_12/05_Bang_tieu_chi_danh_gia/Bang_tieu_chi_danh_gia_san_pham.docx" class="btn btn-subtle" download>📥 Word (.docx)</a>
+        </div>
+      </div>
+
+      <!-- HL 06 -->
+      <div class="card">
+        <div class="card-top">
+          <span class="item-tag">Học liệu 06</span>
+          <span class="activity-tag">HĐ 3.2 &amp; HĐ 4</span>
+        </div>
+        <h3 class="card-title">Phiếu nhật kí sử dụng AI</h3>
+        <p class="card-desc">
+          Gồm 6 mục nhật ký: công cụ sử dụng, câu lệnh prompt, đánh giá câu trả lời, lỗi phát hiện, phân tách mã tự viết và cam kết bảo vệ dữ liệu cá nhân (liêm chính học thuật).
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/06_Phieu_nhat_ki_su_dung_AI/Phieu_nhat_ki_su_dung_AI.pdf" class="btn btn-primary" target="_blank">📄 Xem Phiếu (PDF)</a>
+          <a href="Hoc_lieu_Bai_12/06_Phieu_nhat_ki_su_dung_AI/Phieu_nhat_ki_su_dung_AI.docx" class="btn btn-subtle" download>📥 Word (.docx)</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Nhóm 2: 3 Học liệu soạn mới theo Kế hoạch bài dạy -->
+    <div class="section-title">
+      <span>Nhóm II: 3 Học liệu soạn mới theo Kế hoạch bài dạy</span>
+      <span class="pill">Học liệu 07 – 09</span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- HL 07 -->
+      <div class="card highlight">
+        <div class="card-top">
+          <span class="item-tag" style="background:#2563eb;">Học liệu 07</span>
+          <span class="activity-tag">Toàn bài (2 tiết)</span>
+        </div>
+        <h3 class="card-title">Bài trình chiếu (Slide 16:9)</h3>
+        <p class="card-desc">
+          Bộ 15 slide widescreen hiện đại, chuẩn sư phạm: 3 ảnh mockup UI mở đầu trực quan (đăng kí tài khoản, đặt hàng, khảo sát), chốt kiến thức thẻ form, phân biệt GET/POST, 3 lỗi thường gặp và ghi chú giảng dạy.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/07_Bai_trinh_chieu/Bai_12_Tao_bieu_mau.pdf" class="btn btn-primary" target="_blank">🖥️ Xem Slide (PDF)</a>
+          <a href="Hoc_lieu_Bai_12/07_Bai_trinh_chieu/Bai_12_Tao_bieu_mau.pptx" class="btn btn-subtle" download>📊 Tải PowerPoint (.pptx)</a>
+          <a href="Hoc_lieu_Bai_12/07_Bai_trinh_chieu/hinh_anh_mo_dau/01_trang_dang_ki_tai_khoan.png" class="btn btn-subtle" target="_blank">🖼️ Ảnh 1</a>
+          <a href="Hoc_lieu_Bai_12/07_Bai_trinh_chieu/hinh_anh_mo_dau/02_trang_dat_hang_truc_tuyen.png" class="btn btn-subtle" target="_blank">🖼️ Ảnh 2</a>
+          <a href="Hoc_lieu_Bai_12/07_Bai_trinh_chieu/hinh_anh_mo_dau/03_phieu_khao_sat_truc_tuyen.png" class="btn btn-subtle" target="_blank">🖼️ Ảnh 3</a>
+        </div>
+      </div>
+
+      <!-- HL 08 -->
+      <div class="card highlight">
+        <div class="card-top">
+          <span class="item-tag" style="background:#059669;">Học liệu 08</span>
+          <span class="activity-tag">HĐ 2.1 &amp; 2.2</span>
+        </div>
+        <h3 class="card-title">Tệp HTML ví dụ GV chạy minh họa</h3>
+        <p class="card-desc">
+          Bộ ví dụ chạy trực tiếp: minh họa phương thức GET (lộ tham số trên URL), POST (gói tin ẩn trong Body), trang mô phỏng gói tin HTTP offline trực quan, biểu mẫu tổng hợp và bộ bài tập mẫu thực hành.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/01_HD21_Vi_du_GET.html" class="btn btn-success" target="_blank">🌐 Demo GET</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/02_HD21_Vi_du_POST.html" class="btn btn-success" target="_blank">🌐 Demo POST</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/03_HD21_Mo_phong_GET_va_POST_Offline.html" class="btn btn-primary" target="_blank">⚡ So Sánh Trực Quan</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/04_HD22_Vi_du_tong_hop.html" class="btn btn-subtle" target="_blank">📋 Form Tổng Hợp</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/05_HD22_Minh_hoa_3_loi_thuong_gap.html" class="btn btn-subtle" target="_blank">⚠️ Demo 3 Lỗi</a>
+        </div>
+      </div>
+
+      <!-- HL 09 -->
+      <div class="card highlight">
+        <div class="card-top">
+          <span class="item-tag" style="background:#d97706;">Học liệu 09</span>
+          <span class="activity-tag">HĐ 3.1</span>
+        </div>
+        <h3 class="card-title">Bộ thẻ A, B, C, D in cho 4 đội</h3>
+        <p class="card-desc">
+          Bản in gồm 8 trang A4 được phân bố thành 16 thẻ A5 hai mặt (mặt trước ký hiệu đáp án A/B/C/D cỡ lớn, mặt sau tên Đội và mã màu), có đường nét đứt định vị cắt chuẩn xác.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/09_Bo_the_ABCD_4_doi/Bo_the_ABCD_4_doi.pdf" class="btn btn-primary" target="_blank">🖨️ Bản In PDF (8 Trang)</a>
+          <a href="Hoc_lieu_Bai_12/09_Bo_the_ABCD_4_doi/Bo_the_ABCD_4_doi.docx" class="btn btn-subtle" download>📥 Word (.docx)</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hồ sơ tham khảo thêm -->
+    <div class="section-title">
+      <span>Tài liệu Kế hoạch bài dạy &amp; Sản phẩm học sinh mẫu</span>
+      <span class="pill">Tham khảo</span>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-top">
+          <span class="item-tag">Giáo Án</span>
+          <span class="activity-tag">Chính khóa</span>
+        </div>
+        <h3 class="card-title">Kế hoạch bài dạy Bài 12: Tạo biểu mẫu</h3>
+        <p class="card-desc">
+          Văn bản giáo án gốc đầy đủ tiến trình 4 hoạt động dạy học, chỉ số hành vi năng lực tin học và hồ sơ phụ lục phục vụ kiểm tra chuyên môn.
+        </p>
+        <div class="btn-group">
+          <a href="KHBD%20Bài%2012.pdf" class="btn btn-primary" target="_blank">📄 Mở KHBD (PDF)</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <span class="item-tag">Thực Hành</span>
+          <span class="activity-tag">HĐ 3.2 &amp; 4</span>
+        </div>
+        <h3 class="card-title">Bộ sản phẩm mẫu của học sinh</h3>
+        <p class="card-desc">
+          Bao gồm 4 sản phẩm mẫu theo yêu cầu Nhiệm vụ 1 (Đơn đặt món ăn), Nhiệm vụ 2 (Đăng ký môn thi tốt nghiệp), Phiếu đăng ký CLB và Trang web tích hợp iframe Bài 11.
+        </p>
+        <div class="btn-group">
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/tham_khao_san_pham_HS/nv1_monan.html" class="btn btn-subtle" target="_blank">NV1: Đặt món</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/tham_khao_san_pham_HS/nv2_dangkithi.html" class="btn btn-subtle" target="_blank">NV2: Đăng ký thi</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/tham_khao_san_pham_HS/dangki_clb.html" class="btn btn-subtle" target="_blank">CLB Tin học</a>
+          <a href="Hoc_lieu_Bai_12/08_Tep_HTML_vi_du_minh_hoa/tham_khao_san_pham_HS/bai11_nhung_iframe.html" class="btn btn-subtle" target="_blank">Nhiệm vụ 3 (iframe)</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>Bộ môn Tin học 12 — Định hướng Tin học ứng dụng (KNTT)</strong></p>
+      <p style="margin-top: 4px; font-size: 12.5px;">Thiết kế phục vụ giảng dạy tại Trường THPT Nguyễn Chí Thanh. Bản quyền thuộc về tác giả &amp; nhà trường.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

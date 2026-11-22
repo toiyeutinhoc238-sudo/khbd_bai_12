@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bộ 9 Học liệu — Bài 12: Tạo biểu mẫu (Tin học 12)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f1f5f9; color: #0f172a; padding: 26px 20px 50px; }
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .hero {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a 60%, #2563eb);
+      color: #fff; border-radius: 20px; padding: 28px 34px; margin-bottom: 24px;
+      box-shadow: 0 16px 36px rgba(15,23,42,0.18);
+    }
+    .hero .sub { color: #93c5fd; font-weight: 700; font-size: 13px; letter-spacing: 0.6px; }
+    .hero h1 { font-size: 30px; margin: 6px 0 8px; }
+    .hero p { color: #dbeafe; font-size: 15px; line-height: 1.5; }
+    .sec-title {
+      font-size: 18px; font-weight: 800; color: #1e3a8a; margin: 22px 0 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sec-title span.pill { font-size: 12px; background: #dbeafe; color: #1d4ed8; padding: 3px 10px; border-radius: 999px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 16px; }
+    .card {
+      background: #fff; border: 1.5px solid #cbd5e1; border-radius: 16px; padding: 18px 20px;
+      display: flex; flex-direction: column; gap: 10px;
+      box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+    }
+    .card.new-item { border-color: #2563eb; background: linear-gradient(180deg, #eff6ff 0%, #ffffff 34%); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+    .num { font-size: 12px; font-weight: 800; color: #fff; background: #1e3a8a; padding: 3px 10px; border-radius: 999px; }
+    .card.new-item .num { background: #2563eb; }
+    .stage { font-size: 12px; font-weight: 700; color: #475569; }
+    .card h3 { font-size: 17px; color: #0f172a; }
+    .card p { font-size: 13.5px; color: #475569; line-height: 1.48; flex: 1; }
+    .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    a.btn {
+      text-decoration: none; font-size: 12.8px; font-weight: 700; padding: 6px 12px;
+      border-radius: 8px; background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1;
+      transition: all 0.12s ease;
+    }
+    a.btn:hover { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
+    a.btn.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+    a.btn.primary:hover { background: #1d4ed8; }
+    a.btn.green { background: #059669; color: #fff; border-color: #059669; }
+    a.btn.green:hover { background: #047857; }
+    footer { text-align: center; margin-top: 32px; color: #64748b; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="sub">TRƯỜNG THPT NGUYỄN CHÍ THANH • TỔ TIN HỌC • TIN HỌC 12 (KNTT)</div>
+      <h1>Bộ 9 Học liệu Dạy học — Bài 12: Tạo biểu mẫu</h1>
+      <p>Thiết kế đồng bộ 100% theo Kế hoạch bài dạy Bài 12 (02 tiết). Nhấn vào từng nút bên dưới để mở trực tiếp tệp trình chiếu, trò chơi tương tác offline, tệp HTML minh họa và các phiếu/bảng/thẻ sẵn sàng in khổ A4.</p>
+    </div>
+
+    <div class="sec-title">Nhóm A: 6 Học liệu trong Hồ sơ bài dạy (đã thiết kế hoàn chỉnh để in / trình chiếu) <span class="pill">Học liệu 01 – 06</span></div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-top"><span class="num">Học liệu 01</span><span class="stage">Hoạt động 2.1 &amp; 2.2</span></div>
+        <h3>Phiếu học tập số 1</h3>
+        <p>Gồm Câu 1 (thuộc tính thẻ <code>&lt;form&gt;</code>, kết quả quan sát GET/POST) và Câu 2 (chọn phần tử HTML cho đơn đặt hàng hội chợ ẩm thực). Kèm bản Đáp án riêng cho GV.</p>
+        <div class="links">
+          <a class="btn primary" href="01_Phieu_hoc_tap_so_1/Phieu_hoc_tap_so_1.pdf" target="_blank">📄 Mở bản in PDF</a>
+          <a class="btn" href="01_Phieu_hoc_tap_so_1/Phieu_hoc_tap_so_1.docx">📝 Bản Word (.docx)</a>
+          <a class="btn" href="01_Phieu_hoc_tap_so_1/Phieu_hoc_tap_so_1_Dap_an_GV.pdf" target="_blank">✅ Đáp án GV</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="num">Học liệu 02</span><span class="stage">Hoạt động 3.1 (12 phút)</span></div>
+        <h3>Trò chơi “Đấu trường Biểu mẫu”</h3>
+        <p>Trò chơi tương tác <strong>chạy 100% offline</strong>: 12 câu hỏi chuẩn KHBD, 4 đội, đồng hồ 20s, thưởng nhanh +5đ (≥10s), Câu 12 Ngôi sao hi vọng x2, bảng bấm thư kí và thống kê câu nhiều đội sai.</p>
+        <div class="links">
+          <a class="btn green" href="02_Tro_choi_Dau_truong_Bieu_mau/Dau_truong_Bieu_mau.html" target="_blank">🎮 Chạy Trò chơi</a>
+          <a class="btn" href="02_Tro_choi_Dau_truong_Bieu_mau/The_le_va_Bo_cau_hoi_Dau_truong_Bieu_mau.pdf" target="_blank">📄 Hồ sơ 12 câu (PDF)</a>
+          <a class="btn" href="02_Tro_choi_Dau_truong_Bieu_mau/The_le_va_Bo_cau_hoi_Dau_truong_Bieu_mau.docx">📝 Word</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="num">Học liệu 03</span><span class="stage">Hoạt động 3.2 (NV 3)</span></div>
+        <h3>Bảng kiểm mã do AI gợi ý</h3>
+        <p>Bảng kiểm 5 tiêu chí kiểm duyệt mã HTML biểu mẫu “Đăng kí môn thi tốt nghiệp”, có cột Đạt/Chưa đạt, ghi lỗi &amp; cách sửa, phần kết luận trách nhiệm của cặp HS.</p>
+        <div class="links">
+          <a class="btn primary" href="03_Bang_kiem_ma_AI_goi_y/Bang_kiem_ma_AI_goi_y.pdf" target="_blank">📄 Mở bản in PDF</a>
+          <a class="btn" href="03_Bang_kiem_ma_AI_goi_y/Bang_kiem_ma_AI_goi_y.docx">📝 Bản Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="num">Học liệu 04</span><span class="stage">Hoạt động 3.2 (Dự phòng)</span></div>
+        <h3>Đoạn mã mẫu có lỗi cài sẵn</h3>
+        <p>Tệp HTML chạy thử cài sẵn đúng 5 lỗi (lệch for/id CCCD, Ngày sinh text, radio khác name, checkbox Toán thiếu name, GET lộ CCCD) + bản đã sửa + phiếu phát tay đánh số dòng.</p>
+        <div class="links">
+          <a class="btn green" href="04_Doan_ma_mau_co_loi/doan_ma_mau_co_loi.html" target="_blank">🐞 Mở HTML lỗi</a>
+          <a class="btn" href="04_Doan_ma_mau_co_loi/doan_ma_mau_da_sua_GV.html" target="_blank">✅ HTML đã sửa</a>
+          <a class="btn primary" href="04_Doan_ma_mau_co_loi/Phieu_Doan_ma_mau_co_loi.pdf" target="_blank">📄 Phiếu phát tay</a>
+          <a class="btn" href="04_Doan_ma_mau_co_loi/Dap_an_5_loi_GV.pdf" target="_blank">🔑 Đáp án GV</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="num">Học liệu 05</span><span class="stage">Hoạt động 3.2 &amp; 4</span></div>
+        <h3>Bảng tiêu chí đánh giá sản phẩm (10đ)</h3>
+        <p>Rubric thang điểm 10 với đủ 5 tiêu chí (2 + 3 + 2 + 2 + 1) ở 3 mức Tốt / Đạt / Chưa đạt; hỗ trợ tự đánh giá, đánh giá chéo và GV chấm điểm.</p>
+        <div class="links">
+          <a class="btn primary" href="05_Bang_tieu_chi_danh_gia/Bang_tieu_chi_danh_gia_san_pham.pdf" target="_blank">📄 Mở bản in PDF</a>
+          <a class="btn" href="05_Bang_tieu_chi_danh_gia/Bang_tieu_chi_danh_gia_san_pham.docx">📝 Bản Word (.docx)</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top"><span class="num">Học liệu 06</span><span class="stage">Hoạt động 3.2 &amp; 4</span></div>
+        <h3>Phiếu nhật kí sử dụng AI</h3>
+        <p>Đủ 6 mục chuẩn KHBD: công cụ AI, câu lệnh, câu trả lời tóm tắt, cách kiểm tra &amp; lỗi AI, phân tách mã tự viết/sửa, khung cam kết không nhập dữ liệu cá nhân thật và kí tên.</p>
+        <div class="links">
+          <a class="btn primary" href="06_Phieu_nhat_ki_su_dung_AI/Phieu_nhat_ki_su_dung_AI.pdf" target="_blank">📄 Mở bản in PDF</a>
+          <a class="btn" href="06_Phieu_nhat_ki_su_dung_AI/Phieu_nhat_ki_su_dung_AI.docx">📝 Bản Word (.docx)</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Nhóm B: 3 Học liệu soạn mới hoàn toàn theo giáo án <span class="pill">Học liệu 07 – 09</span></div>
+    <div class="grid">
+      <div class="card new-item">
+        <div class="card-top"><span class="num">Học liệu 07</span><span class="stage">Toàn bài (Tiết 1 &amp; 2)</span></div>
+        <h3>Bài trình chiếu (15 slide 16:9)</h3>
+        <p>Đầy đủ 15 slide xuyên suốt 2 tiết học, gồm 3 hình ảnh UI mở đầu sắc nét (đăng kí tài khoản, đặt hàng trực tuyến, phiếu khảo sát), chốt kiến thức, kĩ thuật mảnh ghép, 3 lỗi thường gặp, ghi chú cho GV.</p>
+        <div class="links">
+          <a class="btn primary" href="07_Bai_trinh_chieu/Bai_12_Tao_bieu_mau.pptx">📊 Mở PowerPoint (.pptx)</a>
+          <a class="btn" href="07_Bai_trinh_chieu/Bai_12_Tao_bieu_mau.pdf" target="_blank">📄 Bản chiếu PDF</a>
+          <a class="btn" href="07_Bai_trinh_chieu/hinh_anh_mo_dau/01_trang_dang_ki_tai_khoan.png" target="_blank">🖼️ Ảnh 1</a>
+          <a class="btn" href="07_Bai_trinh_chieu/hinh_anh_mo_dau/02_trang_dat_hang_truc_tuyen.png" target="_blank">🖼️ Ảnh 2</a>
+          <a class="btn" href="07_Bai_trinh_chieu/hinh_anh_mo_dau/03_phieu_khao_sat_truc_tuyen.png" target="_blank">🖼️ Ảnh 3</a>
+        </div>
+      </div>
+
+      <div class="card new-item">
+        <div class="card-top"><span class="num">Học liệu 08</span><span class="stage">Hoạt động 2.1 &amp; 2.2</span></div>
+        <h3>Tệp HTML ví dụ GV chạy minh họa</h3>
+        <p>Bộ tệp demo GET → POST (có bản mô phỏng offline phóng to thanh địa chỉ), ví dụ tổng hợp đơn đặt hàng hội chợ ẩm thực, minh họa 3 lỗi thường gặp, và lời giải tham khảo NV1, NV2, Vận dụng.</p>
+        <div class="links">
+          <a class="btn green" href="08_Tep_HTML_vi_du_minh_hoa/01_HD21_Vi_du_GET.html" target="_blank">1. Demo GET</a>
+          <a class="btn green" href="08_Tep_HTML_vi_du_minh_hoa/02_HD21_Vi_du_POST.html" target="_blank">2. Demo POST</a>
+          <a class="btn primary" href="08_Tep_HTML_vi_du_minh_hoa/03_HD21_Mo_phong_GET_va_POST_Offline.html" target="_blank">3. So sánh Offline</a>
+          <a class="btn green" href="08_Tep_HTML_vi_du_minh_hoa/04_HD22_Vi_du_tong_hop.html" target="_blank">4. Ví dụ tổng hợp</a>
+          <a class="btn" href="08_Tep_HTML_vi_du_minh_hoa/05_HD22_Minh_hoa_3_loi_thuong_gap.html" target="_blank">5. Minh họa 3 lỗi</a>
+          <a class="btn" href="08_Tep_HTML_vi_du_minh_hoa/tham_khao_san_pham_HS/bai11_nhung_iframe.html" target="_blank">📎 Mẫu iframe HĐ4</a>
+        </div>
+      </div>
+
+      <div class="card new-item">
+        <div class="card-top"><span class="num">Học liệu 09</span><span class="stage">Hoạt động 3.1 (In ấn)</span></div>
+        <h3>Bộ thẻ A, B, C, D cho 4 đội</h3>
+        <p>8 trang A4 = <strong>16 thẻ khổ A5</strong> (2 thẻ/trang có đường cắt đứt nét) cho Đội 1, Đội 2, Đội 3, Đội 4. Màu đồng bộ với trò chơi “Đấu trường Biểu mẫu”, rõ nét cả khi in đen trắng.</p>
+        <div class="links">
+          <a class="btn primary" href="09_Bo_the_ABCD_4_doi/Bo_the_ABCD_4_doi.pdf" target="_blank">🖨️ Mở bản in PDF (8 trang A4)</a>
+          <a class="btn" href="09_Bo_the_ABCD_4_doi/Bo_the_ABCD_4_doi.docx">📝 Bản Word (.docx)</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>Thiết kế chuẩn theo Kế hoạch bài dạy Tin học 12 — Bài 12: Tạo biểu mẫu (Trường THPT Nguyễn Chí Thanh)</footer>
+  </div>
+</body>
+</html>
