@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang nhận dữ liệu biểu mẫu (Offline)</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; max-width: 780px; margin: 36px auto; padding: 0 20px; background: #f8fafc; color: #0f172a; }
+    .card { background: #fff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 24px 28px; box-shadow: 0 10px 25px rgba(15,23,42,0.06); }
+    .url-bar { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: 10px; font-family: Consolas, monospace; font-size: 16px; word-break: break-all; margin: 14px 0 20px; }
+    .url-bar .query { color: #fbbf24; font-weight: 700; background: rgba(251,191,36,0.18); padding: 2px 6px; border-radius: 5px; }
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-weight: 700; font-size: 13px; margin-bottom: 10px; }
+    .badge-get { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+    .badge-post { background: #dcfce7; color: #166534; border: 1px solid #22c55e; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #cbd5e1; padding: 10px 12px; text-align: left; }
+    th { background: #eff6ff; color: #1e3a8a; }
+    .note { margin-top: 18px; padding: 12px 14px; border-radius: 10px; background: #eff6ff; border-left: 4px solid #2563eb; font-size: 14.5px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="methodBadge" class="badge"></div>
+    <h1 style="margin:0 0 8px; font-size:24px;">Kết quả nhận dữ liệu biểu mẫu (Chạy Offline)</h1>
+    <p style="margin:0; color:#475569;">Quan sát <strong>thanh địa chỉ (URL)</strong> ở phía trên trình duyệt và khung phóng to bên dưới:</p>
+
+    <div class="url-bar" id="urlDisplay"></div>
+
+    <div id="paramsArea"></div>
+
+    <div class="note" id="lessonNote"></div>
+  </div>
+
+  <script>
+    const fullUrl = window.location.href;
+    const query = window.location.search;
+    const baseUrl = fullUrl.split('?')[0];
+
+    const urlDisplay = document.getElementById('urlDisplay');
+    const badge = document.getElementById('methodBadge');
+    const paramsArea = document.getElementById('paramsArea');
+    const lessonNote = document.getElementById('lessonNote');
+
+    if (query && query.length > 1) {
+      badge.textContent = 'PHƯƠNG THỨC GET — Dữ liệu hiện trên thanh địa chỉ';
+      badge.className = 'badge badge-get';
+      urlDisplay.innerHTML = `${baseUrl}<span class="query">${decodeURIComponent(query)}</span>`;
+
+      const params = new URLSearchParams(query);
+      let rows = '';
+      for (const [k, v] of params.entries()) {
+        rows += `<tr><td><code>${k}</code></td><td><strong>${v || '(trống)'}</strong></td></tr>`;
+      }
+      paramsArea.innerHTML = `
+        <h3 style="margin:10px 0 6px;">Các cặp <code>name=value</code> đã gửi qua URL:</h3>
+        <table>
+          <thead><tr><th>Thuộc tính name</th><th>Giá trị (value)</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+      lessonNote.innerHTML = '<strong>Nhận xét:</strong> Với <code>method="GET"</code>, toàn bộ dữ liệu các ô có thuộc tính <code>name</code> đều bị nối vào thanh địa chỉ dạng <code>?name=value</code>. Vì vậy <strong>không dùng GET</strong> để gửi tài khoản, mật khẩu hay số CCCD!';
+    } else {
+      badge.textContent = 'PHƯƠNG THỨC POST (hoặc không có dữ liệu trên URL)';
+      badge.className = 'badge badge-post';
+      urlDisplay.textContent = baseUrl;
+      paramsArea.innerHTML = `
+        <p style="padding:14px; background:#f0fdf4; border:1px solid #86efac; border-radius:10px; color:#166534; font-weight:600;">
+          ✓ Thanh địa chỉ KHÔNG hiển thị đoạn <code>?name=value</code>! Dữ liệu được gửi ngầm trong phần thân yêu cầu HTTP (Request Body).
+        </p>
+      `;
+      lessonNote.innerHTML = '<strong>Nhận xét:</strong> <code>method="POST"</code> không hiển thị dữ liệu trên thanh địa chỉ và gửi được lượng dữ liệu lớn. Để bảo vệ mật khẩu trên đường truyền, trang web cần kết hợp dùng giao thức <strong>HTTPS</strong>.';
+    }
+  </script>
+</body>
+</html>

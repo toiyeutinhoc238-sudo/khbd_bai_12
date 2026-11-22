@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng kí môn thi tốt nghiệp (Bản mẫu có lỗi cài sẵn)</title>
+</head>
+<body>
+  <h1>Đăng kí môn thi tốt nghiệp</h1>
+  <form action="xuly.php" method="GET">
+    <fieldset>
+      <label for="hoten">Họ và tên:</label>
+      <input type="text" id="hoten" name="hoTen"><br>
+      <label for="cccd">CCCD:</label>
+      <input type="number" id="so_cccd" name="cccd"><br>
+      <label for="ngaysinh">Ngày sinh:</label>
+      <input type="text" id="ngaysinh" name="ngaySinh"><br>
+      Giới tính:
+      <input type="radio" id="nam" name="gt1" value="Nam">
+      <label for="nam">Nam</label>
+      <input type="radio" id="nu" name="gt2" value="Nu">
+      <label for="nu">Nữ</label><br>
+      Môn thi:
+      <input type="checkbox" id="toan" value="Toan">
+      <label for="toan">Toán</label>
+      <input type="checkbox" id="van" name="monThi" value="NguVan">
+      <label for="van">Ngữ văn</label>
+      <input type="checkbox" id="nn" name="monThi" value="NgoaiNgu">
+      <label for="nn">Ngoại ngữ</label><br>
+      <label for="tohop">Tổ hợp:</label>
+      <select id="tohop" name="toHop">
+        <option value="KHTN">Khoa học tự nhiên</option>
+        <option value="KHXH">Khoa học xã hội</option>
+      </select><br>
+      <input type="submit" value="Gửi thông tin">
+    </fieldset>
+  </form>
+</body>
+</html>

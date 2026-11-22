@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ví dụ Hoạt động 2.1 — Gửi dữ liệu bằng GET</title>
+</head>
+<body>
+  <h2>Ví dụ Hoạt động 2.1: Gửi biểu mẫu bằng phương thức GET</h2>
+  <p><em>Hướng dẫn GV:</em> Nhập họ tên (ví dụ: <strong>An</strong>) rồi nhấn <strong>Gửi</strong>. Cho HS quan sát thanh địa chỉ xuất hiện đoạn <code>?hoTen=An</code>.</p>
+  <p><em>Lưu ý:</em> Nếu phòng máy không có Internet, GV đổi <code>action</code> thành <code>ket_qua_offline.html</code>.</p>
+
+  <form action="https://www.w3schools.com/action_page.php"
+        method="GET" target="_blank">
+    <label for="ten">Họ tên:</label>
+    <input type="text" id="ten" name="hoTen">
+    <button type="submit">Gửi</button>
+  </form>
+</body>
+</html>

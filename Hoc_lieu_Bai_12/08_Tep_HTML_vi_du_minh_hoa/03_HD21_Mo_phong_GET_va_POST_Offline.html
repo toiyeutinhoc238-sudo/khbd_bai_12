@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Minh họa trực quan GET vs POST — Hoạt động 2.1</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f1f5f9; color: #0f172a; margin: 0; padding: 24px; }
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .header { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 22px 28px; border-radius: 16px; margin-bottom: 20px; }
+    .header h1 { margin: 0 0 6px; font-size: 26px; }
+    .header p { margin: 0; opacity: 0.9; font-size: 15px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { background: #fff; border-radius: 16px; padding: 22px; border: 2px solid #e2e8f0; box-shadow: 0 8px 20px rgba(15,23,42,0.05); }
+    .card.get { border-top: 6px solid #f59e0b; }
+    .card.post { border-top: 6px solid #10b981; }
+    .tag { display: inline-block; font-size: 13px; font-weight: 800; padding: 4px 12px; border-radius: 999px; margin-bottom: 10px; }
+    .tag-get { background: #fef3c7; color: #b45309; }
+    .tag-post { background: #d1fae5; color: #047857; }
+    label { display: block; font-weight: 700; margin: 12px 0 5px; font-size: 15px; }
+    input[type="text"], input[type="password"] {
+      width: 100%; padding: 10px 12px; border: 1.5px solid #cbd5e1; border-radius: 9px; font-size: 16px;
+    }
+    .btn-row { display: flex; gap: 10px; margin-top: 16px; }
+    button {
+      padding: 10px 18px; border: none; border-radius: 9px; font-size: 15px; font-weight: 700; cursor: pointer;
+    }
+    .btn-get { background: #d97706; color: #fff; }
+    .btn-post { background: #059669; color: #fff; }
+    .btn-real { background: #e2e8f0; color: #1e293b; }
+    .url-preview {
+      margin-top: 16px; background: #0f172a; color: #cbd5e1; border-radius: 10px; padding: 12px 14px;
+      font-family: Consolas, monospace; font-size: 14.5px; overflow-wrap: anywhere; min-height: 76px; line-height: 1.45;
+    }
+    .url-preview .label-bar { font-family: 'Segoe UI', sans-serif; font-size: 11.5px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+    .highlight-leak { color: #fde047; background: rgba(239,68,68,0.35); padding: 2px 5px; border-radius: 4px; font-weight: 700; }
+    .highlight-safe { color: #6ee7b7; font-weight: 700; }
+    .code-snip { margin-top: 14px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; font-family: Consolas, monospace; font-size: 13px; white-space: pre-wrap; color: #1e293b; }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>Minh họa trực quan: So sánh method="GET" và method="POST"</h1>
+      <p>Tin học 12 — Bài 12 (Hoạt động 2.1) • Phóng to mô phỏng thanh địa chỉ trình duyệt cho cả lớp cùng quan sát (Chạy 100% Offline)</p>
+    </div>
+
+    <div class="grid">
+      <!-- GET CARD -->
+      <section class="card get">
+        <span class="tag tag-get">PHƯƠNG THỨC GET</span>
+        <h2 style="margin:0 0 8px;">1. Biểu mẫu dùng method="GET"</h2>
+        <form id="formGet" action="ket_qua_offline.html" method="GET" target="_blank">
+          <label for="tenGet">Họ tên (<code>name="hoTen"</code>):</label>
+          <input type="text" id="tenGet" name="hoTen" value="An">
+
+          <label for="mkGet">Mật khẩu thử (<code>type="password"</code>, <code>name="matKhau"</code>):</label>
+          <input type="password" id="mkGet" name="matKhau" value="123456">
+
+          <div class="btn-row">
+            <button type="button" class="btn-get" onclick="simulateGet()">🔍 Xem thanh địa chỉ ngay</button>
+            <button type="submit" class="btn-real">↗ Gửi thật (mở tab mới)</button>
+          </div>
+        </form>
+
+        <div class="url-preview" id="previewGet">
+          <div class="label-bar">Thanh địa chỉ trình duyệt (mô phỏng cỡ lớn)</div>
+          <em>Nhấn “Xem thanh địa chỉ ngay” hoặc “Gửi thật” để quan sát...</em>
+        </div>
+
+        <div class="code-snip">&lt;form action="ket_qua_offline.html" method="GET" target="_blank"&gt;
+  &lt;label for="tenGet"&gt;Họ tên:&lt;/label&gt;
+  &lt;input type="text" id="tenGet" name="hoTen"&gt;
+  &lt;input type="password" id="mkGet" name="matKhau"&gt;
+  &lt;button type="submit"&gt;Gửi&lt;/button&gt;
+&lt;/form&gt;</div>
+      </section>
+
+      <!-- POST CARD -->
+      <section class="card post">
+        <span class="tag tag-post">PHƯƠNG THỨC POST</span>
+        <h2 style="margin:0 0 8px;">2. Biểu mẫu dùng method="POST"</h2>
+        <form id="formPost" action="ket_qua_offline.html" method="POST" target="_blank">
+          <label for="tenPost">Họ tên (<code>name="hoTen"</code>):</label>
+          <input type="text" id="tenPost" name="hoTen" value="An">
+
+          <label for="mkPost">Mật khẩu thử (<code>type="password"</code>, <code>name="matKhau"</code>):</label>
+          <input type="password" id="mkPost" name="matKhau" value="123456">
+
+          <div class="btn-row">
+            <button type="button" class="btn-post" onclick="simulatePost()">🔍 Xem thanh địa chỉ ngay</button>
+            <button type="submit" class="btn-real">↗ Gửi thật (mở tab mới)</button>
+          </div>
+        </form>
+
+        <div class="url-preview" id="previewPost">
+          <div class="label-bar">Thanh địa chỉ trình duyệt (mô phỏng cỡ lớn)</div>
+          <em>Nhấn “Xem thanh địa chỉ ngay” hoặc “Gửi thật” để quan sát...</em>
+        </div>
+
+        <div class="code-snip">&lt;form action="ket_qua_offline.html" method="POST" target="_blank"&gt;
+  &lt;label for="tenPost"&gt;Họ tên:&lt;/label&gt;
+  &lt;input type="text" id="tenPost" name="hoTen"&gt;
+  &lt;input type="password" id="mkPost" name="matKhau"&gt;
+  &lt;button type="submit"&gt;Gửi&lt;/button&gt;
+&lt;/form&gt;</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    function simulateGet() {
+      const ten = encodeURIComponent(document.getElementById('tenGet').value);
+      const mk = encodeURIComponent(document.getElementById('mkGet').value);
+      document.getElementById('previewGet').innerHTML = `
+        <div class="label-bar">Thanh địa chỉ trình duyệt — ⚠️ LỘ DỮ LIỆU TRÊN URL!</div>
+        https://truonghoc.edu.vn/xuly.php<span class="highlight-leak">?hoTen=${ten}&amp;matKhau=${mk}</span>
+        <div style="font-family:'Segoe UI',sans-serif; font-size:13px; color:#fca5a5; margin-top:8px;">
+          → Dù ô mật khẩu hiện dấu chấm tròn trên màn hình, dùng <strong>GET</strong> vẫn làm lộ rõ mật khẩu trên thanh địa chỉ!
+        </div>
+      `;
+    }
+
+    function simulatePost() {
+      document.getElementById('previewPost').innerHTML = `
+        <div class="label-bar">Thanh địa chỉ trình duyệt — ✓ KHÔNG LỘ TRÊN URL</div>
+        <span class="highlight-safe">https://truonghoc.edu.vn/xuly.php</span>
+        <div style="font-family:'Segoe UI',sans-serif; font-size:13px; color:#a7f3d0; margin-top:8px;">
+          → Dữ liệu nằm trong phần thân yêu cầu (Request Body), không nối vào địa chỉ trang. Kết hợp <strong>HTTPS</strong> để mã hóa trên đường truyền!
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ví dụ Hoạt động 2.1 — Gửi dữ liệu bằng POST</title>
+</head>
+<body>
+  <h2>Ví dụ Hoạt động 2.1: Gửi biểu mẫu bằng phương thức POST</h2>
+  <p><em>Hướng dẫn GV:</em> Đổi <code>method="GET"</code> thành <code>method="POST"</code>. Nhập họ tên rồi nhấn <strong>Gửi</strong> để HS quan sát thanh địa chỉ <strong>không</strong> còn hiển thị <code>?hoTen=...</code>.</p>
+  <p><em>Lưu ý:</em> Nếu phòng máy không có Internet, GV đổi <code>action</code> thành <code>ket_qua_offline.html</code>.</p>
+
+  <form action="https://www.w3schools.com/action_page.php"
+        method="POST" target="_blank">
+    <label for="ten">Họ tên:</label>
+    <input type="text" id="ten" name="hoTen">
+    <button type="submit">Gửi</button>
+  </form>
+</body>
+</html>

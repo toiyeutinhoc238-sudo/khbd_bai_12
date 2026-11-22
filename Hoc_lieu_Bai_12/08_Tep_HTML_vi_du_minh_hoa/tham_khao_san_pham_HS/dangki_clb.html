@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Vận dụng Câu 1 — Đăng kí thành viên CLB Tin học</title>
+</head>
+<body>
+  <form action="../ket_qua_offline.html" method="POST" target="_blank">
+    <fieldset>
+      <legend>Đăng kí thành viên CLB Tin học</legend>
+      <label for="ht">Họ và tên:</label>
+      <input type="text" id="ht" name="hoTen"><br><br>
+
+      <label for="lop">Lớp:</label>
+      <select id="lop" name="lop">
+        <option value="12A1">12A1</option>
+        <option value="12A2">12A2</option>
+      </select><br><br>
+
+      <label for="mail">Email:</label>
+      <input type="email" id="mail" name="email"><br><br>
+
+      Lĩnh vực yêu thích:
+      <input type="checkbox" id="web" name="linhVuc" value="web">
+      <label for="web">Thiết kế web</label>
+      <input type="checkbox" id="lt" name="linhVuc" value="lapTrinh">
+      <label for="lt">Lập trình</label><br><br>
+
+      Đã từng tham gia câu lạc bộ:
+      <input type="radio" id="co" name="thamGia" value="co">
+      <label for="co">Có</label>
+      <input type="radio" id="chua" name="thamGia" value="chua">
+      <label for="chua">Chưa</label><br><br>
+
+      <label for="ld">Lí do tham gia:</label><br>
+      <textarea id="ld" name="liDo" rows="3" cols="40"></textarea><br><br>
+
+      <input type="submit" value="Đăng kí">
+    </fieldset>
+  </form>
+</body>
+</html>

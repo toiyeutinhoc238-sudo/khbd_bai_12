@@ -1,0 +1,12 @@
+# System & editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.log
+
+# Workspace temporary caches
+.vscode/
+.idea/
+scratch/
+node_modules/

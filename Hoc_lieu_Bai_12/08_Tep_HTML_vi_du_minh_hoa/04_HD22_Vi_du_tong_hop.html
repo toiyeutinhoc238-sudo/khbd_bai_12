@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Ví dụ tổng hợp các phần tử biểu mẫu — Hoạt động 2.2 (Bước 4)</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; max-width: 720px; margin: 28px auto; padding: 0 20px; background: #f8fafc; color: #0f172a; line-height: 1.6; }
+    h1 { color: #1e3a8a; margin-bottom: 6px; }
+    .subtitle { color: #475569; margin-top: 0; margin-bottom: 18px; }
+    fieldset { background: #fff; border: 2px solid #2563eb; border-radius: 12px; padding: 20px 24px; }
+    legend { font-weight: 800; color: #1d4ed8; font-size: 17px; padding: 0 10px; }
+    .row { margin-bottom: 14px; }
+    label.field-label { display: inline-block; min-width: 170px; font-weight: 600; }
+    input[type="text"], input[type="email"], input[type="number"], input[type="time"], select, textarea {
+      padding: 7px 10px; border: 1px solid #94a3b8; border-radius: 6px; font-size: 15px;
+    }
+    button[type="submit"], input[type="reset"] {
+      padding: 10px 20px; border-radius: 8px; border: none; font-size: 15px; font-weight: 700; cursor: pointer; margin-right: 8px;
+    }
+    button[type="submit"] { background: #2563eb; color: #fff; }
+    input[type="reset"] { background: #e2e8f0; color: #334155; }
+    .tip { margin-top: 16px; background: #eff6ff; border-left: 4px solid #2563eb; padding: 12px 16px; border-radius: 8px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Đơn đặt hàng Hội chợ ẩm thực</h1>
+  <p class="subtitle">Ví dụ tổng hợp Bước 4 — Hoạt động 2.2 (Minh họa đầy đủ: <code>fieldset</code>, <code>legend</code>, <code>label</code>, <code>input</code> các kiểu, <code>radio</code>, <code>checkbox</code>, <code>select/option</code>, <code>textarea</code>, <code>button</code>)</p>
+
+  <!-- Dùng GET gửi tới ket_qua_offline.html để GV chạy minh họa cho HS thấy toàn bộ các cặp name=value được gửi đi -->
+  <form action="ket_qua_offline.html" method="GET" target="_blank" autocomplete="on">
+    <fieldset>
+      <legend>Thông tin đơn đặt hàng — Gian hàng Bánh tráng trộn</legend>
+
+      <div class="row">
+        <label class="field-label" for="hoTen">Họ tên người đặt:</label>
+        <input type="text" id="hoTen" name="hoTen" placeholder="Nguyễn Văn An" required>
+      </div>
+
+      <div class="row">
+        <label class="field-label" for="email">Email liên hệ:</label>
+        <input type="email" id="email" name="email" placeholder="an12a1@truong.edu.vn">
+      </div>
+
+      <div class="row">
+        <label class="field-label" for="lop">Lớp:</label>
+        <select id="lop" name="lop">
+          <option value="10">Khối 10</option>
+          <option value="11">Khối 11</option>
+          <option value="12" selected>Khối 12</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <label class="field-label" for="soPhan">Số phần ăn:</label>
+        <input type="number" id="soPhan" name="soPhan" min="1" max="50" value="1">
+      </div>
+
+      <div class="row">
+        <label class="field-label" for="gioNhan">Giờ nhận hàng:</label>
+        <input type="time" id="gioNhan" name="gioNhan" value="09:30">
+      </div>
+
+      <div class="row">
+        <span class="field-label" style="display:inline-block; min-width:170px; font-weight:600;">Kích cỡ (chọn một):</span>
+        <input type="radio" id="nho" name="size" value="nho" checked>
+        <label for="nho">Nhỏ</label>
+        &nbsp;&nbsp;
+        <input type="radio" id="lon" name="size" value="lon">
+        <label for="lon">Lớn</label>
+      </div>
+
+      <div class="row">
+        <span class="field-label" style="display:inline-block; min-width:170px; font-weight:600;">Phần ăn kèm (chọn nhiều):</span>
+        <input type="checkbox" id="trungCut" name="anKem" value="trungCut">
+        <label for="trungCut">Trứng cút</label>
+        &nbsp;&nbsp;
+        <input type="checkbox" id="xoaiBao" name="anKem" value="xoaiBao">
+        <label for="xoaiBao">Xoài bào</label>
+        &nbsp;&nbsp;
+        <input type="checkbox" id="khoBo" name="anKem" value="khoBo">
+        <label for="khoBo">Khô bò</label>
+      </div>
+
+      <div class="row">
+        <label class="field-label" for="ghiChu" style="vertical-align:top;">Ghi chú thêm:</label>
+        <textarea id="ghiChu" name="ghiChu" rows="3" cols="36" placeholder="Ví dụ: Ít cay, không hành phi..."></textarea>
+      </div>
+
+      <div class="row" style="margin-top:18px;">
+        <button type="submit">Đặt hàng ngay</button>
+        <input type="reset" value="Nhập lại">
+      </div>
+    </fieldset>
+  </form>
+
+  <div class="tip">
+    <strong>Gợi ý GV khi chạy minh họa:</strong>
+    1) Nháy thử vào chữ <em>“Họ tên người đặt:”</em>, <em>“Nhỏ”</em>, <em>“Trứng cút”</em> để HS thấy tác dụng của <code>for</code> khớp với <code>id</code>.<br>
+    2) Chọn qua lại giữa <em>Nhỏ</em> và <em>Lớn</em> (chỉ chọn được 1 vì cùng <code>name="size"</code>); chọn nhiều <em>Phần ăn kèm</em>.<br>
+    3) Nhấn <strong>Đặt hàng ngay</strong> để mở tab <code>ket_qua_offline.html</code> kiểm tra đầy đủ các cặp <code>name=value</code> đã gửi đi.
+  </div>
+</body>
+</html>

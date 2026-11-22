@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đấu trường Biểu mẫu — Tin học 12 (Bài 12)</title>
+  <style>
+    :root {
+      --bg-deep: #0b132b;
+      --bg-card: #152242;
+      --bg-card-soft: #1d2d56;
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f8fafc;
+      --muted: #a9b8d9;
+      --accent: #38bdf8;
+      --gold: #fbbf24;
+      --opt-a: #ef4444;
+      --opt-a-dark: #b91c1c;
+      --opt-b: #2563eb;
+      --opt-b-dark: #1d4ed8;
+      --opt-c: #10b981;
+      --opt-c-dark: #047857;
+      --opt-d: #f59e0b;
+      --opt-d-dark: #b45309;
+      --team1: #f43f5e;
+      --team2: #3b82f6;
+      --team3: #10b981;
+      --team4: #a855f7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+      background: radial-gradient(circle at top right, #1e3a8a 0%, #0b132b 52%, #070d1f 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      background: rgba(11, 19, 43, 0.85);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #38bdf8, #6366f1);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
+    }
+
+    .brand h1 {
+      font-size: 20px;
+      letter-spacing: 0.3px;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 9px 15px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border);
+      transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-1px); background: #263a6e; }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+    }
+    .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #0369a1, #1d4ed8); }
+
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #10b981);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.32);
+    }
+    .btn-success:hover:not(:disabled) { background: linear-gradient(135deg, #047857, #059669); }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d97706, #f59e0b);
+      color: #111827;
+      box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+    }
+    .btn-gold:hover:not(:disabled) { background: linear-gradient(135deg, #b45309, #d97706); color: #fff; }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+    }
+
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 20px 24px 36px;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== WELCOME SCREEN ===== */
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 24px;
+      margin-top: 12px;
+    }
+
+    .panel {
+      background: rgba(21, 34, 66, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32);
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .hero-title {
+      font-size: 40px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      background: linear-gradient(90deg, #ffffff, #7dd3fc, #fde68a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      margin-bottom: 22px;
+    }
+
+    .rules-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rules-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .rule-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #2563eb;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .rule-star {
+      background: linear-gradient(135deg, #f59e0b, #fbbf24);
+      color: #111827;
+    }
+
+    .team-setup-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 18px 0 24px;
+    }
+
+    .team-input-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .team-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .team-input-row input {
+      flex: 1;
+      background: rgba(11, 19, 43, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .team-input-row input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+
+    .start-btn-big {
+      width: 100%;
+      justify-content: center;
+      padding: 16px 24px;
+      font-size: 20px;
+      border-radius: 14px;
+    }
+
+    /* ===== GAMEPLAY SCREEN ===== */
+    .scoreboard-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .team-card {
+      background: rgba(21, 34, 66, 0.92);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .team-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 6px;
+      background: var(--tc);
+    }
+
+    .team-card.leading {
+      border-color: rgba(251, 191, 36, 0.75);
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.18);
+    }
+
+    .team-meta { padding-left: 6px; }
+    .team-name { font-size: 16px; font-weight: 800; }
+    .team-delta {
+      font-size: 12px;
+      font-weight: 700;
+      min-height: 18px;
+      margin-top: 2px;
+    }
+    .delta-plus { color: #34d399; }
+    .delta-zero { color: #fca5a5; }
+    .team-score {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .arena-layout {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .question-panel {
+      background: rgba(21, 34, 66, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 22px 26px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    .question-panel.star-mode {
+      border: 2px solid #fbbf24;
+      box-shadow: 0 0 36px rgba(251, 191, 36, 0.28);
+      background: linear-gradient(160deg, rgba(48, 36, 12, 0.9), rgba(21, 34, 66, 0.97) 42%);
+    }
+
+    .q-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .q-badges {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .q-pill {
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .star-pill {
+      background: linear-gradient(135deg, #f59e0b, #fde047);
+      color: #111827;
+      padding: 6px 15px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+      animation: pulseGold 1.4s infinite;
+    }
+
+    @keyframes pulseGold {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); }
+      50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+    }
+
+    /* Timer */
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(11, 19, 43, 0.85);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 14px;
+    }
+
+    .timer-digits {
+      font-size: 30px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      min-width: 78px;
+      text-align: center;
+      color: #34d399;
+    }
+
+    .timer-digits.warn { color: #fbbf24; }
+    .timer-digits.danger { color: #f87171; animation: blink 0.5s infinite; }
+
+    @keyframes blink {
+      50% { opacity: 0.45; }
+    }
+
+    .bonus-indicator {
+      font-size: 13px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: rgba(16, 185, 129, 0.18);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .bonus-indicator.expired {
+      background: rgba(148, 163, 184, 0.14);
+      color: #94a3b8;
+      border-color: rgba(148, 163, 184, 0.25);
+    }
+
+    .timer-track {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .timer-track::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: rgba(255, 255, 255, 0.65);
+      z-index: 2;
+    }
+
+    .timer-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #10b981, #38bdf8);
+      transition: width 0.1s linear, background 0.25s ease;
+    }
+
+    .timer-fill.warn { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+    .timer-fill.danger { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+    .question-text {
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1.42;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    code.inline-code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      color: #7dd3fc;
+      padding: 2px 8px;
+      border-radius: 7px;
+      font-size: 0.9em;
+      font-weight: 700;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .opt-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.35;
+      transition: all 0.22s ease;
+      position: relative;
+    }
+
+    .opt-letter {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .opt-A .opt-letter { background: var(--opt-a); }
+    .opt-B .opt-letter { background: var(--opt-b); }
+    .opt-C .opt-letter { background: var(--opt-c); }
+    .opt-D .opt-letter { background: var(--opt-d); color: #111827; }
+
+    .opt-card.correct {
+      background: rgba(16, 185, 129, 0.22);
+      border-color: #34d399;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.35);
+      transform: scale(1.015);
+    }
+
+    .opt-card.dimmed {
+      opacity: 0.42;
+    }
+
+    .opt-card .correct-tag {
+      display: none;
+      position: absolute;
+      top: -11px;
+      right: 14px;
+      background: #10b981;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 3px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+    }
+    .opt-card.correct .correct-tag { display: inline-block; }
+
+    .explanation-box {
+      display: none;
+      background: rgba(14, 165, 233, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-left: 6px solid #38bdf8;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .explanation-box.visible {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .explanation-box strong {
+      color: #7dd3fc;
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .control-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .control-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ===== SECRETARY PANEL ===== */
+    .secretary-panel {
+      background: rgba(21, 34, 66, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.32);
+    }
+
+    .sec-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sec-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .sec-team-box {
+      background: rgba(11, 19, 43, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 11px 12px;
+      margin-bottom: 10px;
+      border-left: 5px solid var(--tc);
+    }
+
+    .sec-team-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .sec-status {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .sec-status.fast { color: #34d399; }
+    .sec-status.normal { color: #fde68a; }
+    .sec-status.ok { color: #34d399; }
+    .sec-status.bad { color: #f87171; }
+
+    .sec-btns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr) 34px;
+      gap: 6px;
+    }
+
+    .pick-btn {
+      border: 2px solid transparent;
+      border-radius: 9px;
+      padding: 9px 0;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.12s ease;
+    }
+
+    .pick-btn:hover:not(:disabled) { transform: translateY(-1px); background: rgba(255, 255, 255, 0.18); }
+    .pick-btn:disabled { cursor: not-allowed; opacity: 0.6; }
+
+    .pick-btn.sel-A { background: var(--opt-a); border-color: #fff; box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); }
+    .pick-btn.sel-B { background: var(--opt-b); border-color: #fff; box-shadow: 0 0 12px rgba(37, 99, 235, 0.5); }
+    .pick-btn.sel-C { background: var(--opt-c); border-color: #fff; box-shadow: 0 0 12px rgba(16, 185, 129, 0.5); }
+    .pick-btn.sel-D { background: var(--opt-d); color: #111827; border-color: #fff; box-shadow: 0 0 12px rgba(245, 158, 11, 0.5); }
+
+    .clear-btn {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .clear-btn:hover:not(:disabled) { background: rgba(239, 68, 68, 0.25); color: #fff; }
+    .clear-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .q-nav-dots {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .q-dot {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      border-radius: 8px;
+      padding: 6px 0;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+    }
+    .q-dot.current { background: #2563eb; color: #fff; border-color: #93c5fd; }
+    .q-dot.done { background: rgba(16, 185, 129, 0.22); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.45); }
+    .q-dot.star-q { border-color: #fbbf24; color: #fde047; }
+
+    /* ===== SUMMARY SCREEN ===== */
+    .podium-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 20px 0 26px;
+    }
+
+    .podium-card {
+      background: rgba(21, 34, 66, 0.94);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .podium-card.rank-1 {
+      border-color: #fbbf24;
+      background: linear-gradient(180deg, rgba(251, 191, 36, 0.18), rgba(21, 34, 66, 0.96));
+      box-shadow: 0 0 32px rgba(251, 191, 36, 0.28);
+      transform: translateY(-6px);
+    }
+
+    .medal { font-size: 38px; margin-bottom: 6px; }
+    .podium-name { font-size: 20px; font-weight: 900; margin-bottom: 6px; }
+    .podium-pts { font-size: 40px; font-weight: 900; color: #fde047; }
+    .podium-stat { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+    .review-table-wrap {
+      overflow-x: auto;
+      margin-top: 14px;
+    }
+
+    table.review-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    table.review-table th, table.review-table td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    table.review-table th {
+      background: rgba(11, 19, 43, 0.85);
+      color: #93c5fd;
+      font-weight: 800;
+    }
+
+    table.review-table tr.hard-row {
+      background: rgba(239, 68, 68, 0.14);
+    }
+
+    .cell-ok { color: #34d399; font-weight: 800; }
+    .cell-bad { color: #f87171; font-weight: 800; }
+
+    /* Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.78);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: #152242;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 18px;
+      max-width: 720px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    @media (max-width: 1050px) {
+      .welcome-grid, .arena-layout { grid-template-columns: 1fr; }
+      .scoreboard-strip, .podium-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .question-text { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-badge">&lt;/&gt;</div>
+      <div>
+        <h1>ĐẤU TRƯỜNG BIỂU MẪU</h1>
+        <small>Tin học 12 • Bài 12: Tạo biểu mẫu • Hoạt động 3.1 (12 phút)</small>
+      </div>
+    </div>
+    <div class="top-actions">
+      <button class="btn" id="btnRulesModal" type="button">📜 Thể lệ</button>
+      <button class="btn" id="btnSound" type="button">🔊 Âm thanh: BẬT</button>
+      <button class="btn" id="btnFullscreen" type="button">⛶ Toàn màn hình</button>
+      <button class="btn btn-danger" id="btnRestart" type="button" style="display:none;">↺ Chơi lại</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- SCREEN 1: WELCOME -->
+    <section id="screenWelcome" class="screen active">
+      <div class="welcome-grid">
+        <div class="panel">
+          <div class="hero-tag">⚡ HOẠT ĐỘNG 3.1 — LUYỆN TẬP TRẮC NGHIỆM</div>
+          <h2 class="hero-title">Sẵn sàng chinh phục 12 thử thách Biểu mẫu HTML?</h2>
+          <p class="hero-sub">
+            Trò chơi ôn tập kiến thức về thẻ <strong>&lt;form&gt;</strong>, phương thức <strong>GET / POST</strong>, các phần tử nhập liệu và sử dụng AI an toàn, có kiểm soát.
+          </p>
+          <ul class="rules-list">
+            <li>
+              <span class="rule-num">1</span>
+              <div>GV chia lớp thành <strong>4 đội</strong>, mỗi đội nhận một <strong>bộ thẻ A, B, C, D</strong>.</div>
+            </li>
+            <li>
+              <span class="rule-num">2</span>
+              <div>Mỗi câu hỏi có <strong>20 giây</strong>; đội nào thống nhất được đáp án thì <strong>giơ thẻ ngay</strong>, một HS làm <strong>thư kí</strong> bấm đáp án của đội đó trên trò chơi.</div>
+            </li>
+            <li>
+              <span class="rule-num">3</span>
+              <div>Trả lời đúng được <strong>10 điểm</strong>; trả lời đúng khi đồng hồ còn <strong>từ 10 giây trở lên</strong> (tính lúc thư kí bấm) được <strong>cộng thêm 5 điểm</strong> (tổng 15 điểm).</div>
+            </li>
+            <li>
+              <span class="rule-num rule-star">★</span>
+              <div><strong>Câu 12 là câu “Ngôi sao hi vọng”</strong>, điểm của câu này được <strong>nhân đôi</strong> (tối đa 30 điểm!).</div>
+            </li>
+            <li>
+              <span class="rule-num">5</span>
+              <div>Đội có <strong>tổng điểm cao nhất</strong> sẽ giành chiến thắng chung cuộc.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h3 style="font-size:22px; margin-bottom:6px;">Thiết lập 4 đội thi</h3>
+          <p style="font-size:14px; color:var(--muted);">Thầy/cô có thể giữ tên mặc định hoặc nhập tên 4 đội trước khi bắt đầu.</p>
+
+          <div class="team-setup-list">
+            <div class="team-input-row">
+              <span class="team-dot" style="background:var(--team1)"></span>
+              <input id="inputTeam0" type="text" value="Đội 1" maxlength="24">
+            </div>
+            <div class="team-input-row">
+              <span class="team-dot" style="background:var(--team2)"></span>
+              <input id="inputTeam1" type="text" value="Đội 2" maxlength="24">
+            </div>
+            <div class="team-input-row">
+              <span class="team-dot" style="background:var(--team3)"></span>
+              <input id="inputTeam2" type="text" value="Đội 3" maxlength="24">
+            </div>
+            <div class="team-input-row">
+              <span class="team-dot" style="background:var(--team4)"></span>
+              <input id="inputTeam3" type="text" value="Đội 4" maxlength="24">
+            </div>
+          </div>
+
+          <button id="btnStartGame" class="btn btn-primary start-btn-big" type="button">
+            🚀 BẮT ĐẦU ĐẤU TRƯỜNG
+          </button>
+
+          <div style="margin-top:16px; padding:12px 14px; border-radius:12px; background:rgba(251,191,36,0.1); border:1px solid rgba(251,191,36,0.3); font-size:13.5px; color:#fde68a; line-height:1.45;">
+            <strong>Gợi ý điều khiển cho GV:</strong> Sau khi bấm <em>Chốt &amp; Hiện đáp án</em>, mời đội trả lời đúng giải thích lí do trước rồi mới bấm <em>Xem lời giải chi tiết</em> (Bước 3 KHBD).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: ARENA -->
+    <section id="screenArena" class="screen">
+      <div class="scoreboard-strip" id="scoreboardStrip"></div>
+
+      <div class="arena-layout">
+        <!-- Left: Question -->
+        <div class="question-panel" id="questionPanel">
+          <div class="q-header">
+            <div class="q-badges">
+              <span class="q-pill" id="qCounter">Câu 1 / 12</span>
+              <span class="star-pill" id="starPill" style="display:none;">⭐ NGÔI SAO HI VỌNG • NHÂN ĐÔI ĐIỂM (x2)</span>
+            </div>
+            <div class="timer-box">
+              <span class="bonus-indicator" id="bonusIndicator">⚡ Còn ≥10s: +5đ</span>
+              <div class="timer-digits" id="timerDigits">20.0s</div>
+            </div>
+          </div>
+
+          <div class="timer-track">
+            <div class="timer-fill" id="timerFill"></div>
+          </div>
+
+          <div class="question-text" id="questionText"></div>
+          <div class="options-grid" id="optionsGrid"></div>
+
+          <div class="explanation-box" id="explanationBox">
+            <strong>💡 Lời giải chi tiết</strong>
+            <div id="explanationText"></div>
+          </div>
+
+          <div class="control-bar">
+            <div class="control-group">
+              <button class="btn btn-primary" id="btnToggleTimer" type="button">▶ Bắt đầu 20s</button>
+              <button class="btn" id="btnResetTimer" type="button">↺ Đặt lại đồng hồ</button>
+            </div>
+            <div class="control-group">
+              <button class="btn btn-gold" id="btnRevealAnswer" type="button">✔ Chốt &amp; Hiện đáp án</button>
+              <button class="btn btn-success" id="btnShowExplain" type="button" disabled>💡 Xem lời giải</button>
+              <button class="btn btn-primary" id="btnNextQ" type="button" disabled>Câu tiếp theo ➔</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Secretary Board -->
+        <aside class="secretary-panel">
+          <div class="sec-title">
+            <span>📋 Bảng bấm của Thư kí</span>
+            <span id="secPickedCount" style="font-size:13px; color:var(--accent);">0/4 đội</span>
+          </div>
+          <p class="sec-sub">
+            Khi đội nào giơ thẻ, thư kí bấm ngay A/B/C/D tương ứng để hệ thống chốt mốc thời gian thưởng +5 điểm.
+          </p>
+
+          <div id="secretaryTeams"></div>
+
+          <div class="q-nav-dots" id="qNavDots"></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: SUMMARY -->
+    <section id="screenSummary" class="screen">
+      <div class="panel">
+        <div style="text-align:center;">
+          <div class="hero-tag">🏆 KẾT QUẢ CHUNG CUỘC — ĐẤU TRƯỜNG BIỂU MẪU</div>
+          <h2 class="hero-title" id="winnerHeadline" style="font-size:36px;">Chúc mừng đội chiến thắng!</h2>
+          <p style="color:var(--muted); font-size:15px;">Bấm vào bất kì câu hỏi nào trong bảng bên dưới để xem lại nội dung và lời giải (đặc biệt các câu tô đỏ có nhiều đội trả lời sai).</p>
+        </div>
+
+        <div class="podium-grid" id="podiumGrid"></div>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:8px;">
+          <h3 style="font-size:18px;">📊 Thống kê chi tiết 12 câu hỏi (Hỗ trợ GV giảng lại câu nhiều đội sai)</h3>
+          <button class="btn btn-primary" id="btnPlayAgain" type="button">↺ Tổ chức lượt chơi mới</button>
+        </div>
+
+        <div class="review-table-wrap">
+          <table class="review-table" id="reviewTable"></table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h3 id="modalTitle" style="font-size:20px;">Thể lệ trò chơi</h3>
+        <button class="btn" id="btnCloseModal" type="button">✕ Đóng</button>
+      </div>
+      <div id="modalBody" style="font-size:16px; line-height:1.55; color:#e2e8f0;"></div>
+    </div>
+  </div>
+
+  <script>
+    const QUESTIONS = [
+      {
+        id: 1,
+        text: 'Thẻ HTML nào dùng để tạo biểu mẫu?',
+        options: {
+          A: '<table>',
+          B: '<form>',
+          C: '<input>',
+          D: '<label>'
+        },
+        answer: 'B',
+        explanation: 'Biểu mẫu web được tạo bởi cặp thẻ <form>...</form>; các ô nhập, nút bấm đều nằm bên trong cặp thẻ này.',
+        isStar: false
+      },
+      {
+        id: 2,
+        text: 'Kiểu input nào dùng để nhập mật khẩu?',
+        options: {
+          A: 'text',
+          B: 'hidden',
+          C: 'textarea',
+          D: 'password'
+        },
+        answer: 'D',
+        explanation: 'type="password" che các kí tự khi nhập. textarea là một phần tử riêng, không phải kiểu của input.',
+        isStar: false
+      },
+      {
+        id: 3,
+        text: 'Kiểu radio có đặc điểm gì?',
+        options: {
+          A: 'Chọn được nhiều đáp án.',
+          B: 'Dùng để tải tệp.',
+          C: 'Chỉ chọn được một đáp án trong cùng một nhóm.',
+          D: 'Dùng nhập văn bản.'
+        },
+        answer: 'C',
+        explanation: 'Các ô radio có cùng name tạo thành một nhóm; trong nhóm chỉ chọn được một ô.',
+        isStar: false
+      },
+      {
+        id: 4,
+        text: 'Phần tử HTML nào dùng để nhập văn bản nhiều dòng?',
+        options: {
+          A: '<textarea>',
+          B: '<input>',
+          C: '<select>',
+          D: '<option>'
+        },
+        answer: 'A',
+        explanation: 'textarea tạo vùng nhập nhiều dòng; rows quy định số dòng, cols quy định độ rộng hiển thị.',
+        isStar: false
+      },
+      {
+        id: 5,
+        text: 'Cho đoạn mã `<label for="email">Email</label><input id="email" type="email">`. Vai trò của thuộc tính `for="email"` là gì?',
+        options: {
+          A: 'Đặt tên cho biểu mẫu.',
+          B: 'Đặt kiểu dữ liệu của ô nhập.',
+          C: 'Gửi dữ liệu đến máy chủ.',
+          D: 'Liên kết nhãn với ô nhập có id="email".'
+        },
+        answer: 'D',
+        explanation: 'Giá trị của for phải trùng với id của ô nhập; khi nháy chuột vào nhãn, con trỏ chuyển vào ô nhập đó.',
+        isStar: false
+      },
+      {
+        id: 6,
+        text: 'Thuộc tính `action` của thẻ `<form>` xác định điều gì?',
+        options: {
+          A: 'Nơi dữ liệu biểu mẫu được gửi đến.',
+          B: 'Phương thức gửi dữ liệu.',
+          C: 'Tab hiển thị phản hồi.',
+          D: 'Bật chế độ tự động điền.'
+        },
+        answer: 'A',
+        explanation: 'action là nơi nhận dữ liệu; method là cách gửi (GET hoặc POST); target là nơi hiển thị phản hồi; autocomplete là gợi ý tự điền.',
+        isStar: false
+      },
+      {
+        id: 7,
+        text: 'Biểu mẫu có `method="GET"` và ô nhập `name="hoTen"`; nhập “An” rồi nhấn Gửi. Điều gì xảy ra?',
+        options: {
+          A: 'Dữ liệu được mã hóa.',
+          B: 'Thanh địa chỉ có thêm ?hoTen=An.',
+          C: 'Dữ liệu không được gửi.',
+          D: 'Trang luôn mở ở tab mới.'
+        },
+        answer: 'B',
+        explanation: 'Phương thức GET nối dữ liệu vào địa chỉ trang theo cặp name=value, vì vậy không dùng GET để gửi mật khẩu.',
+        isStar: false
+      },
+      {
+        id: 8,
+        text: 'Muốn mục “Xanh lá” được chọn sẵn trong danh sách `<select>`, ta thêm thuộc tính nào vào thẻ `<option>` tương ứng?',
+        options: {
+          A: 'checked',
+          B: 'value',
+          C: 'selected',
+          D: 'default'
+        },
+        answer: 'C',
+        explanation: 'selected dùng cho option; checked dùng cho radio và checkbox.',
+        isStar: false
+      },
+      {
+        id: 9,
+        text: 'Hai ô radio “Nam”, “Nữ” có `name="gt1"` và `name="gt2"`. Khi chạy trên trình duyệt sẽ thấy gì?',
+        options: {
+          A: 'Chọn được cả hai ô cùng lúc.',
+          B: 'Không chọn được ô nào.',
+          C: 'Chỉ chọn được một ô.',
+          D: 'Trình duyệt báo lỗi.'
+        },
+        answer: 'A',
+        explanation: 'Hai ô khác name nên không cùng nhóm, chọn được cả hai. Cách sửa: đặt chung name="gioiTinh".',
+        isStar: false
+      },
+      {
+        id: 10,
+        text: 'Để thu thập thông tin “Sở thích: Bóng đá, Cờ vua, Âm nhạc (được chọn nhiều)”, nên dùng phần tử nào?',
+        options: {
+          A: 'Ba ô radio cùng name.',
+          B: 'Ba ô checkbox cùng name.',
+          C: 'Một vùng textarea.',
+          D: 'Một ô input kiểu password.'
+        },
+        answer: 'B',
+        explanation: 'Checkbox cho phép chọn không hoặc nhiều lựa chọn; mỗi ô cần có thuộc tính value để ghi nhận giá trị.',
+        isStar: false
+      },
+      {
+        id: 11,
+        text: 'Biểu mẫu đăng nhập có ô mật khẩu nên được gửi như thế nào?',
+        options: {
+          A: 'Dùng GET cho nhanh.',
+          B: 'Dùng GET và tắt autocomplete.',
+          C: 'Dùng phương thức nào cũng được, miễn có nút submit.',
+          D: 'Dùng POST, trên trang chạy HTTPS.'
+        },
+        answer: 'D',
+        explanation: 'POST không hiển thị dữ liệu trên địa chỉ trang nhưng không tự mã hóa; trang phải chạy HTTPS để dữ liệu được bảo vệ trên đường truyền.',
+        isStar: false
+      },
+      {
+        id: 12,
+        text: 'Công cụ AI gợi ý mã biểu mẫu đăng kí câu lạc bộ có ô số CCCD và gửi dữ liệu bằng GET. Em nên làm gì?',
+        options: {
+          A: 'Đưa lên trang web ngay vì mã do AI viết.',
+          B: 'Nhập số CCCD thật của bạn vào công cụ AI để nhờ kiểm tra.',
+          C: 'Kiểm tra lại, bỏ ô không cần thiết, đổi sang POST, chạy thử rồi mới dùng.',
+          D: 'Xóa hết và không bao giờ dùng AI.'
+        },
+        answer: 'C',
+        explanation: 'AI chỉ gợi ý và có thể sai; người dùng phải kiểm tra, chỉ thu thông tin cần thiết, không đưa dữ liệu cá nhân thật vào công cụ AI và chịu trách nhiệm cuối cùng.',
+        isStar: true
+      }
+    ];
+
+    const TEAM_COLORS = ['#f43f5e', '#3b82f6', '#10b981', '#a855f7'];
+    const QUESTION_TIME = 20.0;
+
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    let state = {
+      teams: ['Đội 1', 'Đội 2', 'Đội 3', 'Đội 4'],
+      currentIndex: 0,
+      timeLeft: QUESTION_TIME,
+      timerRunning: false,
+      timerHandle: null,
+      lastSecondTick: 20,
+      // per-question records: { revealed, explainShown, picks: [{choice, timeLeft, earned}] }
+      records: []
+    };
+
+    function initRecords() {
+      state.records = QUESTIONS.map(() => ({
+        revealed: false,
+        explainShown: false,
+        picks: [0, 1, 2, 3].map(() => ({ choice: null, timeLeft: null, earned: 0 }))
+      }));
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function formatQuestionHtml(str) {
+      const escaped = escapeHtml(str);
+      return escaped.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+    }
+
+    function playTone(freq, duration, type = 'sine', gainVal = 0.08) {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playChimeWin() {
+      [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+        setTimeout(() => playTone(f, 0.22, 'triangle', 0.1), idx * 90);
+      });
+    }
+
+    function playClick() {
+      playTone(680, 0.07, 'sine', 0.07);
+    }
+
+    function playTimeUp() {
+      playTone(260, 0.35, 'sawtooth', 0.08);
+      setTimeout(() => playTone(210, 0.45, 'sawtooth', 0.08), 220);
+    }
+
+    function getTeamTotal(teamIdx) {
+      return state.records.reduce((sum, rec) => sum + (rec.revealed ? rec.picks[teamIdx].earned : 0), 0);
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.getElementById('btnRestart').style.display = id === 'screenWelcome' ? 'none' : 'inline-flex';
+    }
+
+    function stopTimer() {
+      state.timerRunning = false;
+      if (state.timerHandle) {
+        clearInterval(state.timerHandle);
+        state.timerHandle = null;
+      }
+      updateTimerUI();
+    }
+
+    function startTimer() {
+      const rec = state.records[state.currentIndex];
+      if (rec.revealed) return;
+      if (state.timeLeft <= 0) state.timeLeft = QUESTION_TIME;
+      state.timerRunning = true;
+      state.lastSecondTick = Math.ceil(state.timeLeft);
+      let prev = performance.now();
+      state.timerHandle = setInterval(() => {
+        const now = performance.now();
+        const dt = (now - prev) / 1000;
+        prev = now;
+        state.timeLeft = Math.max(0, state.timeLeft - dt);
+        const curSec = Math.ceil(state.timeLeft);
+        if (curSec < state.lastSecondTick && curSec > 0 && curSec <= 5) {
+          playTone(880, 0.07, 'square', 0.05);
+        }
+        state.lastSecondTick = curSec;
+        updateTimerUI();
+        if (state.timeLeft <= 0) {
+          stopTimer();
+          playTimeUp();
+        }
+      }, 60);
+      updateTimerUI();
+    }
+
+    function updateTimerUI() {
+      const digits = document.getElementById('timerDigits');
+      const fill = document.getElementById('timerFill');
+      const bonus = document.getElementById('bonusIndicator');
+      const btnToggle = document.getElementById('btnToggleTimer');
+      const rec = state.records[state.currentIndex];
+
+      digits.textContent = state.timeLeft.toFixed(1) + 's';
+      const pct = (state.timeLeft / QUESTION_TIME) * 100;
+      fill.style.width = pct + '%';
+
+      digits.classList.remove('warn', 'danger');
+      fill.classList.remove('warn', 'danger');
+      if (state.timeLeft <= 5) {
+        digits.classList.add('danger');
+        fill.classList.add('danger');
+      } else if (state.timeLeft < 10) {
+        digits.classList.add('warn');
+        fill.classList.add('warn');
+      }
+
+      const q = QUESTIONS[state.currentIndex];
+      const bonusPts = q.isStar ? '+10đ (x2)' : '+5đ';
+      if (state.timeLeft >= 10) {
+        bonus.textContent = `⚡ Còn ≥10s: ${bonusPts}`;
+        bonus.classList.remove('expired');
+      } else {
+        bonus.textContent = '⏱ Hết mốc thưởng nhanh';
+        bonus.classList.add('expired');
+      }
+
+      if (rec.revealed) {
+        btnToggle.disabled = true;
+        btnToggle.textContent = '✔ Đã chốt câu';
+        document.getElementById('btnResetTimer').disabled = true;
+      } else {
+        btnToggle.disabled = false;
+        document.getElementById('btnResetTimer').disabled = false;
+        btnToggle.textContent = state.timerRunning ? '⏸ Tạm dừng' : (state.timeLeft < QUESTION_TIME && state.timeLeft > 0 ? '▶ Tiếp tục' : '▶ Bắt đầu 20s');
+      }
+    }
+
+    function renderScoreboard() {
+      const totals = [0, 1, 2, 3].map(getTeamTotal);
+      const maxScore = Math.max(...totals);
+      const rec = state.records[state.currentIndex];
+      const strip = document.getElementById('scoreboardStrip');
+
+      strip.innerHTML = state.teams.map((name, i) => {
+        const leading = maxScore > 0 && totals[i] === maxScore;
+        let deltaHtml = '';
+        if (rec && rec.revealed) {
+          const earned = rec.picks[i].earned;
+          if (earned > 0) {
+            deltaHtml = `<span class="delta-plus">+${earned} điểm câu này</span>`;
+          } else {
+            deltaHtml = `<span class="delta-zero">+0 điểm</span>`;
+          }
+        }
+        return `
+          <div class="team-card ${leading ? 'leading' : ''}" style="--tc:${TEAM_COLORS[i]}">
+            <div class="team-meta">
+              <div class="team-name">${leading ? '👑 ' : ''}${escapeHtml(name)}</div>
+              <div class="team-delta">${deltaHtml}</div>
+            </div>
+            <div class="team-score">${totals[i]}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderQuestion() {
+      stopTimer();
+      const q = QUESTIONS[state.currentIndex];
+      const rec = state.records[state.currentIndex];
+
+      if (!rec.revealed) {
+        state.timeLeft = QUESTION_TIME;
+      }
+
+      const panel = document.getElementById('questionPanel');
+      panel.classList.toggle('star-mode', q.isStar);
+      document.getElementById('starPill').style.display = q.isStar ? 'inline-flex' : 'none';
+      document.getElementById('qCounter').textContent = `Câu ${q.id} / ${QUESTIONS.length}`;
+      document.getElementById('questionText').innerHTML = `Câu ${q.id}. ${formatQuestionHtml(q.text)}`;
+
+      const optGrid = document.getElementById('optionsGrid');
+      optGrid.innerHTML = ['A', 'B', 'C', 'D'].map(letter => {
+        let cls = `opt-card opt-${letter}`;
+        if (rec.revealed) {
+          cls += (letter === q.answer) ? ' correct' : ' dimmed';
+        }
+        return `
+          <div class="${cls}">
+            <span class="correct-tag">✓ ĐÁP ÁN ĐÚNG</span>
+            <div class="opt-letter">${letter}</div>
+            <div>${escapeHtml(q.options[letter])}</div>
+          </div>
+        `;
+      }).join('');
+
+      const expBox = document.getElementById('explanationBox');
+      document.getElementById('explanationText').textContent = q.explanation;
+      expBox.classList.toggle('visible', rec.explainShown);
+
+      document.getElementById('btnRevealAnswer').disabled = rec.revealed;
+      document.getElementById('btnShowExplain').disabled = !rec.revealed || rec.explainShown;
+      const btnNext = document.getElementById('btnNextQ');
+      btnNext.disabled = !rec.revealed;
+      btnNext.textContent = (state.currentIndex === QUESTIONS.length - 1) ? '🏆 Xem bảng tổng kết' : 'Câu tiếp theo ➔';
+
+      renderScoreboard();
+      renderSecretary();
+      renderNavDots();
+      updateTimerUI();
+    }
+
+    function renderSecretary() {
+      const q = QUESTIONS[state.currentIndex];
+      const rec = state.records[state.currentIndex];
+      const container = document.getElementById('secretaryTeams');
+
+      const pickedCount = rec.picks.filter(p => p.choice !== null).length;
+      document.getElementById('secPickedCount').textContent = `${pickedCount}/4 đội đã chọn`;
+
+      container.innerHTML = state.teams.map((name, idx) => {
+        const pick = rec.picks[idx];
+        let statusText = 'Chưa giơ thẻ';
+        let statusCls = '';
+        if (rec.revealed) {
+          if (pick.choice === null) {
+            statusText = 'Không trả lời (+0đ)';
+            statusCls = 'bad';
+          } else if (pick.choice === q.answer) {
+            const fastNote = pick.timeLeft >= 10 ? ' ⚡ Nhanh' : '';
+            statusText = `Đúng (${pick.choice})${fastNote} • +${pick.earned}đ`;
+            statusCls = 'ok';
+          } else {
+            statusText = `Sai (chọn ${pick.choice}) • +0đ`;
+            statusCls = 'bad';
+          }
+        } else if (pick.choice) {
+          const isFast = pick.timeLeft >= 10;
+          statusText = `Đã chốt ${pick.choice} lúc ${pick.timeLeft.toFixed(1)}s ${isFast ? '⚡' : ''}`;
+          statusCls = isFast ? 'fast' : 'normal';
+        }
+
+        const btns = ['A', 'B', 'C', 'D'].map(letter => {
+          const selected = pick.choice === letter ? `sel-${letter}` : '';
+          return `<button class="pick-btn ${selected}" type="button" ${rec.revealed ? 'disabled' : ''} onclick="pickAnswer(${idx}, '${letter}')">${letter}</button>`;
+        }).join('');
+
+        return `
+          <div class="sec-team-box" style="--tc:${TEAM_COLORS[idx]}">
+            <div class="sec-team-head">
+              <span>${escapeHtml(name)}</span>
+              <span class="sec-status ${statusCls}">${statusText}</span>
+            </div>
+            <div class="sec-btns">
+              ${btns}
+              <button class="clear-btn" type="button" title="Xóa chọn" ${rec.revealed || !pick.choice ? 'disabled' : ''} onclick="clearPick(${idx})">✕</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderNavDots() {
+      const wrap = document.getElementById('qNavDots');
+      wrap.innerHTML = QUESTIONS.map((q, idx) => {
+        const rec = state.records[idx];
+        const cls = [
+          'q-dot',
+          idx === state.currentIndex ? 'current' : '',
+          rec.revealed ? 'done' : '',
+          q.isStar ? 'star-q' : ''
+        ].join(' ');
+        return `<button class="${cls}" type="button" onclick="jumpToQuestion(${idx})">${q.isStar ? '★12' : q.id}</button>`;
+      }).join('');
+    }
+
+    window.pickAnswer = function(teamIdx, letter) {
+      const rec = state.records[state.currentIndex];
+      if (rec.revealed) return;
+      rec.picks[teamIdx].choice = letter;
+      rec.picks[teamIdx].timeLeft = Number(state.timeLeft.toFixed(2));
+      playClick();
+      renderSecretary();
+
+      // If all 4 teams have answered while timer is running, pause timer automatically
+      const allPicked = rec.picks.every(p => p.choice !== null);
+      if (allPicked && state.timerRunning) {
+        stopTimer();
+      }
+    };
+
+    window.clearPick = function(teamIdx) {
+      const rec = state.records[state.currentIndex];
+      if (rec.revealed) return;
+      rec.picks[teamIdx].choice = null;
+      rec.picks[teamIdx].timeLeft = null;
+      renderSecretary();
+    };
+
+    window.jumpToQuestion = function(idx) {
+      state.currentIndex = idx;
+      renderQuestion();
+    };
+
+    function revealCurrentAnswer() {
+      stopTimer();
+      const q = QUESTIONS[state.currentIndex];
+      const rec = state.records[state.currentIndex];
+      if (rec.revealed) return;
+
+      const multiplier = q.isStar ? 2 : 1;
+      let anyCorrect = false;
+      rec.picks.forEach(p => {
+        if (p.choice === q.answer) {
+          const base = 10;
+          const speedBonus = (p.timeLeft !== null && p.timeLeft >= 10) ? 5 : 0;
+          p.earned = (base + speedBonus) * multiplier;
+          anyCorrect = true;
+        } else {
+          p.earned = 0;
+        }
+      });
+      rec.revealed = true;
+      if (anyCorrect) playChimeWin(); else playTone(300, 0.25, 'triangle', 0.08);
+      renderQuestion();
+    }
+
+    function renderSummary() {
+      showScreen('screenSummary');
+      playChimeWin();
+
+      const stats = state.teams.map((name, idx) => {
+        let total = 0, correct = 0, fast = 0;
+        state.records.forEach((rec, qIdx) => {
+          const p = rec.picks[idx];
+          if (rec.revealed) {
+            total += p.earned;
+            if (p.choice === QUESTIONS[qIdx].answer) {
+              correct++;
+              if (p.timeLeft !== null && p.timeLeft >= 10) fast++;
+            }
+          }
+        });
+        return { idx, name, total, correct, fast, color: TEAM_COLORS[idx] };
+      });
+
+      const ranked = [...stats].sort((a, b) => b.total - a.total || b.correct - a.correct);
+      const topScore = ranked[0].total;
+      const winners = ranked.filter(t => t.total === topScore).map(t => t.name);
+      document.getElementById('winnerHeadline').textContent =
+        topScore > 0 ? `🏆 Chúc mừng ${winners.join(' & ')} vô địch (${topScore} điểm)!` : 'Hoàn thành Đấu trường Biểu mẫu!';
+
+      const medals = ['🥇', '🥈', '🥉', '🎖️'];
+      document.getElementById('podiumGrid').innerHTML = ranked.map((t, rankIdx) => `
+        <div class="podium-card ${rankIdx === 0 && topScore > 0 ? 'rank-1' : ''}" style="border-top: 6px solid ${t.color}">
+          <div class="medal">${medals[rankIdx]}</div>
+          <div class="podium-name">${escapeHtml(t.name)}</div>
+          <div class="podium-pts">${t.total}</div>
+          <div class="podium-stat">Đúng: <strong>${t.correct}/12</strong> • Thưởng nhanh: <strong>${t.fast}</strong></div>
+        </div>
+      `).join('');
+
+      const headerRow = `
+        <tr>
+          <th>Câu</th>
+          <th>Đáp án</th>
+          ${state.teams.map(n => `<th>${escapeHtml(n)}</th>`).join('')}
+          <th>Số đội sai</th>
+          <th>Xem lại</th>
+        </tr>
+      `;
+
+      const bodyRows = QUESTIONS.map((q, qIdx) => {
+        const rec = state.records[qIdx];
+        let wrongCount = 0;
+        const cells = rec.picks.map(p => {
+          const ok = p.choice === q.answer;
+          if (!ok) wrongCount++;
+          if (!p.choice) return `<td class="cell-bad">— (0đ)</td>`;
+          return `<td class="${ok ? 'cell-ok' : 'cell-bad'}">${p.choice} (${p.earned > 0 ? '+' + p.earned : '0'}đ)</td>`;
+        }).join('');
+        const hardClass = wrongCount >= 2 ? 'hard-row' : '';
+        return `
+          <tr class="${hardClass}">
+            <td><strong>${q.isStar ? '★ ' : ''}Câu ${q.id}</strong></td>
+            <td><strong>${q.answer}</strong></td>
+            ${cells}
+            <td><strong>${wrongCount}/4</strong> ${wrongCount >= 2 ? '⚠️' : ''}</td>
+            <td><button class="btn" style="padding:5px 10px; font-size:12px;" onclick="openQuestionModal(${qIdx})">Xem</button></td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('reviewTable').innerHTML = `<thead>${headerRow}</thead><tbody>${bodyRows}</tbody>`;
+    }
+
+    window.openQuestionModal = function(qIdx) {
+      const q = QUESTIONS[qIdx];
+      document.getElementById('modalTitle').textContent = `${q.isStar ? '⭐ ' : ''}Câu ${q.id} — Đáp án đúng: ${q.answer}`;
+      const optsHtml = ['A', 'B', 'C', 'D'].map(l => {
+        const isRight = l === q.answer;
+        return `<div style="padding:8px 12px; margin:6px 0; border-radius:8px; background:${isRight ? 'rgba(16,185,129,0.22)' : 'rgba(255,255,255,0.05)'}; border:1px solid ${isRight ? '#34d399' : 'rgba(255,255,255,0.1)'};"><strong>${l}.</strong> ${escapeHtml(q.options[l])} ${isRight ? ' ✓' : ''}</div>`;
+      }).join('');
+      document.getElementById('modalBody').innerHTML = `
+        <p style="font-weight:700; font-size:18px; margin-bottom:12px;">${formatQuestionHtml(q.text)}</p>
+        ${optsHtml}
+        <div style="margin-top:14px; padding:12px 14px; border-radius:10px; background:rgba(56,189,248,0.14); border-left:4px solid #38bdf8;">
+          <strong>Lời giải:</strong> ${escapeHtml(q.explanation)}
+        </div>
+      `;
+      document.getElementById('modalBackdrop').classList.add('open');
+    };
+
+    function openRulesModal() {
+      document.getElementById('modalTitle').textContent = '📜 Thể lệ trò chơi “Đấu trường Biểu mẫu”';
+      document.getElementById('modalBody').innerHTML = `
+        <ul style="padding-left:20px; display:flex; flex-direction:column; gap:10px;">
+          <li>GV chia lớp thành <strong>4 đội</strong>, mỗi đội nhận một bộ thẻ <strong>A, B, C, D</strong>.</li>
+          <li>Mỗi câu hỏi có <strong>20 giây</strong>; đội nào thống nhất được đáp án thì giơ thẻ ngay, một HS làm thư kí bấm đáp án của đội đó trên trò chơi.</li>
+          <li>Trả lời đúng được <strong>10 điểm</strong>; trả lời đúng khi đồng hồ còn <strong>từ 10 giây trở lên</strong> (tính lúc thư kí bấm) được <strong>cộng thêm 5 điểm</strong>.</li>
+          <li><strong>Câu 12 là câu “Ngôi sao hi vọng”</strong>, điểm của câu này được <strong>nhân đôi</strong>.</li>
+          <li>Đội có tổng điểm cao nhất sẽ chiến thắng.</li>
+        </ul>
+      `;
+      document.getElementById('modalBackdrop').classList.add('open');
+    }
+
+    // Event bindings
+    document.getElementById('btnStartGame').addEventListener('click', () => {
+      state.teams = [0, 1, 2, 3].map(i => {
+        const val = document.getElementById(`inputTeam${i}`).value.trim();
+        return val || `Đội ${i + 1}`;
+      });
+      state.currentIndex = 0;
+      initRecords();
+      showScreen('screenArena');
+      renderQuestion();
+      playClick();
+    });
+
+    document.getElementById('btnToggleTimer').addEventListener('click', () => {
+      if (state.timerRunning) stopTimer(); else startTimer();
+    });
+
+    document.getElementById('btnResetTimer').addEventListener('click', () => {
+      stopTimer();
+      state.timeLeft = QUESTION_TIME;
+      updateTimerUI();
+    });
+
+    document.getElementById('btnRevealAnswer').addEventListener('click', revealCurrentAnswer);
+
+    document.getElementById('btnShowExplain').addEventListener('click', () => {
+      const rec = state.records[state.currentIndex];
+      rec.explainShown = true;
+      renderQuestion();
+      playClick();
+    });
+
+    document.getElementById('btnNextQ').addEventListener('click', () => {
+      if (state.currentIndex < QUESTIONS.length - 1) {
+        state.currentIndex++;
+        renderQuestion();
+      } else {
+        renderSummary();
+      }
+    });
+
+    document.getElementById('btnRestart').addEventListener('click', () => {
+      if (confirm('Quay về màn hình thiết lập để bắt đầu lượt chơi mới?')) {
+        stopTimer();
+        showScreen('screenWelcome');
+      }
+    });
+
+    document.getElementById('btnPlayAgain').addEventListener('click', () => {
+      stopTimer();
+      showScreen('screenWelcome');
+    });
+
+    document.getElementById('btnSound').addEventListener('click', (e) => {
+      soundEnabled = !soundEnabled;
+      e.target.textContent = soundEnabled ? '🔊 Âm thanh: BẬT' : '🔇 Âm thanh: TẮT';
+    });
+
+    document.getElementById('btnFullscreen').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    });
+
+    document.getElementById('btnRulesModal').addEventListener('click', openRulesModal);
+    document.getElementById('btnCloseModal').addEventListener('click', () => {
+      document.getElementById('modalBackdrop').classList.remove('open');
+    });
+    document.getElementById('modalBackdrop').addEventListener('click', (e) => {
+      if (e.target.id === 'modalBackdrop') {
+        document.getElementById('modalBackdrop').classList.remove('open');
+      }
+    });
+
+    initRecords();
+  </script>
+</body>
+</html>

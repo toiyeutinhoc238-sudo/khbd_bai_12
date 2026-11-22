@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Minh họa 3 lỗi thường gặp — Hoạt động 2.2 (Bước 4)</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; max-width: 820px; margin: 28px auto; padding: 0 20px; background: #fffbeb; color: #0f172a; line-height: 1.55; }
+    h1 { color: #b91c1c; margin-bottom: 6px; }
+    .err-card { background: #fff; border: 2px solid #fca5a5; border-left: 7px solid #dc2626; border-radius: 12px; padding: 16px 20px; margin-bottom: 16px; }
+    .err-card h2 { margin: 0 0 8px; font-size: 18px; color: #991b1b; }
+    .code { background: #1e293b; color: #f8fafc; padding: 10px 14px; border-radius: 8px; font-family: Consolas, monospace; font-size: 13.5px; margin: 10px 0; overflow-x: auto; }
+    .bad { color: #fca5a5; font-weight: 700; text-decoration: underline wavy #ef4444; }
+    .fix { background: #f0fdf4; border: 1px solid #86efac; color: #166534; padding: 8px 12px; border-radius: 8px; font-size: 14px; margin-top: 10px; }
+    button { background: #dc2626; color: #fff; border: none; padding: 9px 18px; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Minh họa 3 lỗi thường gặp khi tạo biểu mẫu</h1>
+  <p>Hoạt động 2.2 (Bước 4 — KHBD trang 11): GV cho HS thao tác trực tiếp trên từng lỗi để thấy hậu quả trên trình duyệt.</p>
+
+  <form action="ket_qua_offline.html" method="GET" target="_blank">
+    <!-- LỖI 1 -->
+    <div class="err-card">
+      <h2>Lỗi 1: Quên thuộc tính <code>name</code> nên dữ liệu KHÔNG được gửi</h2>
+      <p>
+        <label for="o1">Họ tên (có <code>name="hoTen"</code>):</label>
+        <input type="text" id="o1" name="hoTen" value="Minh">
+        <br><br>
+        <label for="o2">Lớp (<strong>QUÊN thuộc tính name</strong>):</label>
+        <input type="text" id="o2" value="12A1">
+      </p>
+      <div class="code">&lt;input type="text" id="o2" <span class="bad">(thiếu name="lop")</span> value="12A1"&gt;</div>
+      <div class="fix">→ Khi nhấn <strong>Gửi thử biểu mẫu</strong> bên dưới, bảng kết quả chỉ nhận được <code>hoTen=Minh</code>, còn ô <strong>Lớp</strong> hoàn toàn biến mất!</div>
+    </div>
+
+    <!-- LỖI 2 -->
+    <div class="err-card">
+      <h2>Lỗi 2: Thuộc tính <code>for</code> của <code>&lt;label&gt;</code> KHÔNG khớp với <code>id</code> của <code>&lt;input&gt;</code></h2>
+      <p>
+        <label for="dia_chi_email" style="cursor:pointer; font-weight:700; color:#1d4ed8;">👉 Hãy nháy chuột vào dòng nhãn Email này:</label>
+        <input type="email" id="email" name="email" placeholder="Con trỏ sẽ KHÔNG nhảy vào đây!">
+      </p>
+      <div class="code">&lt;label <span class="bad">for="dia_chi_email"</span>&gt;Email:&lt;/label&gt;
+&lt;input type="email" <span class="bad">id="email"</span> name="email"&gt;</div>
+      <div class="fix">→ Cách sửa: đặt <code>for="email"</code> trùng khớp hoàn toàn với <code>id="email"</code>.</div>
+    </div>
+
+    <!-- LỖI 3 -->
+    <div class="err-card">
+      <h2>Lỗi 3: Các ô <code>radio</code> khác <code>name</code> nên chọn được CẢ HAI ô cùng lúc</h2>
+      <p>
+        Giới tính (thử bấm chọn cả Nam và Nữ):
+        <input type="radio" id="gtNam" name="gt1" value="Nam">
+        <label for="gtNam">Nam</label>
+        &nbsp;&nbsp;
+        <input type="radio" id="gtNu" name="gt2" value="Nu">
+        <label for="gtNu">Nữ</label>
+      </p>
+      <div class="code">&lt;input type="radio" id="gtNam" <span class="bad">name="gt1"</span> value="Nam"&gt;
+&lt;input type="radio" id="gtNu"  <span class="bad">name="gt2"</span> value="Nu"&gt;</div>
+      <div class="fix">→ Cách sửa: đặt cùng <code>name="gioiTinh"</code> cho tất cả các ô radio trong cùng nhóm lựa chọn.</div>
+    </div>
+
+    <button type="submit">Gửi thử biểu mẫu để kiểm chứng Lỗi 1</button>
+  </form>
+</body>
+</html>
